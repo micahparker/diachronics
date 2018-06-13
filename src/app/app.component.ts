@@ -3,9 +3,15 @@ import axios, { AxiosResponse, AxiosAdapter } from 'axios';
 
 import * as jsonpAdapter from 'axios-jsonp';
 
-import books_OT from './data/books_OT';
+import data_books_OT from './data/books_OT';
+import data_documentary from './data/documentary';
+import data_supplementary from './data/supplementary';
+
+
 import Book from './models/book';
 import Chapter from './models/chapter';
+import Verse from './models/verse';
+import Diachronic from './models/diachronic';
 
 @Component({
   selector: 'app-root',
@@ -14,17 +20,23 @@ import Chapter from './models/chapter';
 })
 export class AppComponent implements OnInit {
   title = 'app';
+  
   books: Book[];
   book: string;
   book_num: number;
   chapter: number;
   left_chapters: Chapter[];
   right_chapters: Chapter[];
+  
+  diachronic_supplementary: Diachronic[];
+  diachronic_documentary: Diachronic[];
 
   showSideMenu: boolean;
 
   ngOnInit() {
-    this.books = books_OT;
+    this.books = data_books_OT;
+    this.diachronic_supplementary = data_supplementary;
+    this.diachronic_documentary = data_documentary;
     this.book = 'Genesis';
     this.book_num = 1;
     this.chapter = 1;
@@ -53,7 +65,6 @@ export class AppComponent implements OnInit {
         adapter: jsonpAdapter as AxiosAdapter,
         callbackParamName: 'callback'
       });
-      console.log(resp.data[0]);
       resp.data.forEach((v) => {
         if (activeChapter === null) {
           activeChapter = {
@@ -63,13 +74,14 @@ export class AppComponent implements OnInit {
             rtl: trans.toLowerCase() === 'bhs'
           };
         }
-        activeChapter.verses.push({
-          number: v.verse,
-          text: v.text.replace(/\<\/?p ?[a-z\=\"]{0,}\>/gi, '').replace(/\<a .*\<\/a\>/gi, ''),
-          linebreak: (v.text.indexOf('</p>') > -1)
-        });
+        activeChapter.verses = activeChapter.verses.concat(
+          this.processVerse(activeChapter, {
+	          number: v.verse,
+	          text: v.text.replace(/\<\/?p ?[a-z\=\"]{0,}\>/gi, '').replace(/\<a .*\<\/a\>/gi, ''),
+	          linebreak: (v.text.indexOf('</p>') > -1)
+          })
+        );
       });
-      console.log(activeChapter.verses[0]);
     } else {
       // @ts-ignore
       resp = await axios({
@@ -86,18 +98,23 @@ export class AppComponent implements OnInit {
       };
       // tslint:disable-next-line:forin
       for (const v in json.chapter) {
-        activeChapter.verses.push({
-          // tslint:disable-next-line:radix
-          number: json.chapter[v].verse_nr,
-          text: json.chapter[v].verse,
-          linebreak: trans.toLowerCase() === 'bhs'
-        });
+        activeChapter.verses = activeChapter.verses.concat(
+          this.processVerse(activeChapter, {
+	          number: json.chapter[v].verse_nr,
+	          text: json.chapter[v].verse,
+	          linebreak: trans.toLowerCase() === 'bhs'
+          })
+        );
       }
     }
 
     return activeChapter;
   }
-
+	
+  processVerse(chapter: Chapter, verse: Verse) {
+  	return [verse];
+  }
+	
   numArray(from: number, to: number) {
     return Array(to - from).fill(0).map((n, i) => i + from);
   }

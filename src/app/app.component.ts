@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import axios, { AxiosResponse, AxiosAdapter } from 'axios';
 
 import * as jsonpAdapter from 'axios-jsonp';
@@ -10,7 +10,8 @@ import Chapter from './models/chapter';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent implements OnInit {
   title = 'app';
@@ -49,7 +50,7 @@ export class AppComponent implements OnInit {
     if (trans.toLowerCase() === 'net') {
       // @ts-ignore
       resp = await axios({
-        url: `http://labs.bible.org/api/?type=json&formatting=para&passage=${passage}`,
+        url: `//labs.bible.org/api/?type=json&formatting=para&passage=${passage}`,
         adapter: jsonpAdapter as AxiosAdapter,
         callbackParamName: 'callback'
       });
@@ -73,7 +74,7 @@ export class AppComponent implements OnInit {
     } else {
       // @ts-ignore
       resp = await axios({
-        url: `http://getbible.net/json?version=${trans}&passage=${passage}`,
+        url: `//getbible.net/json?version=${trans}&passage=${passage}`,
         adapter: jsonpAdapter as AxiosAdapter,
         callbackParamName: 'getbible'
       });

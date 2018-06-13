@@ -1,6 +1,7 @@
 :host {
     display: block;
     height: 100%;
+    overflow: hidden;
 }
 
 .logo {
@@ -19,7 +20,7 @@
     color: white;
     font-weight: bold;
     font-size: 24px;
-    padding: 25px 40px 25px 40px;
+    padding: 16px 40px 15px 40px;
     cursor: pointer;
 }
 
@@ -30,21 +31,25 @@
 .header .title {
     display: inline-block;
     font-weight: normal;
-    font-size: 30px;
-    padding: 20px 10px 20px 40px;
+    font-size: 25px;
+    padding: 15px 0px 0px 40px;
 }
 
 .header input {
     position: absolute;
     right: 40px;
-    top: 20px;
+    top: 12px;
     height: 30px;
     width: 20%;
     padding-left: 10px;
 }
 
+.ui-accordion-header.ui-state-active {
+    border: 0;
+}
+
 .split-pane {
-    height: calc(100% - 80px) !important;
+    height: calc(100% - 60px) !important;
     display: block;
 }
 

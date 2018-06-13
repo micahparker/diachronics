@@ -4,7 +4,7 @@
   <input type="text" pInputText placeholder="Search">
 </div>
 <p-sidebar [(visible)]="showSideMenu">
-  <p-accordion [activeIndex]="book_num - 1">
+  <p-accordion [activeIndex]="book_num - 1" expandIcon="" collapseIcon="">
     <div *ngFor="let book of books">
       <p-accordionTab header="{{book.title}}">
         <div class="ui-g">
@@ -23,7 +23,7 @@
           <div class="chapter" *ngFor="let chapter of left_chapters">
               <div class="ltr" *ngIf="!chapter.rtl">
                 <div class="verse" *ngFor="let verse of chapter.verses">
-                  <div class="number">{{verse.number}}</div>
+                  <div class="number" *ngIf="verse.number">{{verse.number}}</div>
                   <div class="text">{{verse.text}}</div>
                   <div class="linebreak" *ngIf="verse.linebreak">&nbsp;</div>
                 </div>
@@ -31,7 +31,7 @@
               <div class="rtl" *ngIf="chapter.rtl">
                 <div class="verse" *ngFor="let verse of chapter.verses">
                   <div class="text">{{verse.text}}</div>
-                  <div class="number">{{verse.number}}</div>
+                  <div class="number" *ngIf="verse.number">{{verse.number}}</div>
                   <div class="linebreak" *ngIf="verse.linebreak">&nbsp;</div>
                 </div>
               </div>
@@ -44,7 +44,7 @@
             <div class="chapter" *ngFor="let chapter of right_chapters">
               <div class="ltr" *ngIf="!chapter.rtl">
                 <div class="verse" *ngFor="let verse of chapter.verses">
-                  <div class="number">{{verse.number}}</div>
+                  <div class="number" *ngIf="verse.number">{{verse.number}}</div>
                   <div class="text">{{verse.text}}</div>
                   <div class="linebreak" *ngIf="verse.linebreak">&nbsp;</div>
                 </div>
@@ -52,7 +52,7 @@
               <div class="rtl" *ngIf="chapter.rtl">
                 <div class="verse" *ngFor="let verse of chapter.verses">
                   <div class="text">{{verse.text}}</div>
-                  <div class="number">{{verse.number}}</div>
+                  <div class="number" *ngIf="verse.number">{{verse.number}}</div>
                   <div class="linebreak" *ngIf="verse.linebreak">&nbsp;</div>
                 </div>
               </div>

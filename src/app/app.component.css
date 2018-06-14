@@ -20,12 +20,17 @@
     color: white;
     font-weight: bold;
     font-size: 24px;
-    padding: 16px 40px 15px 40px;
+    padding: 16px 40px 15px 20px;
     cursor: pointer;
+    text-transform: uppercase;
 }
 
 .header .book:hover {
     text-decoration: underline;
+}
+
+.header .book i {
+    padding-right: 10px;
 }
 
 .header .title {
@@ -46,6 +51,20 @@
 
 .ui-accordion-header.ui-state-active {
     border: 0;
+}
+
+.sideMenu .sideMenu-options {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.sideMenu .chapter {
+    cursor: pointer;
+}
+
+.sideMenu .chapter:hover {
+    text-decoration: underline;
+    font-weight: bold;
 }
 
 .split-pane {
@@ -81,6 +100,49 @@
     display: inline;
 }
 
+.book .chapter .verse.BCE-760 .text {
+    color: #D09429;
+}
+
+.book .chapter .verse.BCE-625 .text {
+    color: #7338A7;
+}
+
+.book .chapter .verse.BCE-550 .text {
+    color: #B71A4F;
+}
+
+.book .chapter .verse.BCE-530 .text {
+    color: #507BC3;
+}
+
+.book .chapter .verse.BCE-500 .text {
+    color: #859F4A;
+}
+
+.book .chapter .verse.BCE-450 .text {
+    color: black;
+}
+
+.book .chapter .verse.BCE-425 .text {
+    color: #827570;
+}
+
+.book .chapter .verse.BCE-405 .text {
+    color: #827570;
+    background: #D2D3D6;
+}
+
+.book .chapter .verse.BCE-400 .text {
+    color: #4073B0;
+    background: #DEE8FE;
+}
+
+.book .chapter .verse.BCE-375 .text {
+    color: #57823E;
+    background: #C7E7A8;
+}
+
 .book .chapter .verse .text {
     display: inline;
 }
@@ -88,6 +150,7 @@
 .book .chapter .verse .number {
     display: inline;
     font-weight: bold;
+    color: black;
 }
 
 .book .chapter .ltr .verse .number {

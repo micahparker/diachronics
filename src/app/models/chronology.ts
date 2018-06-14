@@ -1,4 +1,4 @@
-export default interface Diachronic {
+export default interface Chronology {
 	"Christian Book Order": string;
 	"Book": string;
 	"Start Chapter": number;

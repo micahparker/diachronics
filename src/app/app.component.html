@@ -1,14 +1,20 @@
 <div class="header">
-  <div class="book" (click)="click_book()">{{book}} {{chapter}}</div>
+  <div class="book" (click)="click_book()">
+    <i class="fa fa-bars" aria-hidden="true"></i>
+    {{book}} {{chapter}}
+  </div>
   <div class="title">Bible "thoughts" with Mark Stone</div>
   <input type="text" pInputText placeholder="Search">
 </div>
-<p-sidebar [(visible)]="showSideMenu">
+<p-sidebar [(visible)]="showSideMenu" class="sideMenu">
+  <div class="sideMenu-options">
+    <p-selectButton [options]="chronologies" [(ngModel)]="chronology_selected"></p-selectButton>
+  </div>
   <p-accordion [activeIndex]="book_num - 1" expandIcon="" collapseIcon="">
     <div *ngFor="let book of books">
       <p-accordionTab header="{{book.title}}">
         <div class="ui-g">
-            <div class="ui-g-2" *ngFor="let c of numArray(1, book.num_of_chapters + 1)">{{c}}</div>
+            <div class="ui-g-2 chapter" *ngFor="let c of numArray(1, book.num_of_chapters + 1)" (click)="click_chapter(book.title, c)">{{c}}</div>
         </div>
       </p-accordionTab>
     </div>
@@ -22,16 +28,16 @@
         <div class="book">
           <div class="chapter" *ngFor="let chapter of left_chapters">
               <div class="ltr" *ngIf="!chapter.rtl">
-                <div class="verse" *ngFor="let verse of chapter.verses">
-                  <div class="number" *ngIf="verse.number">{{verse.number}}</div>
+                <div class="verse {{verse.classification}}" title="{{verse.number}} - {{verse.classification}}" *ngFor="let verse of chapter.verses">
+                  <div class="number" *ngIf="verse.number && (verse.number - .01) <= numRound(verse.number)" title="{{verse.number}}">{{numRound(verse.number)}}</div>
                   <div class="text">{{verse.text}}</div>
                   <div class="linebreak" *ngIf="verse.linebreak">&nbsp;</div>
                 </div>
               </div>
               <div class="rtl" *ngIf="chapter.rtl">
-                <div class="verse" *ngFor="let verse of chapter.verses">
+                <div class="verse {{verse.classification}}" title="{{verse.number}} - {{verse.classification}}" *ngFor="let verse of chapter.verses">
                   <div class="text">{{verse.text}}</div>
-                  <div class="number" *ngIf="verse.number">{{verse.number}}</div>
+                  <div class="number" *ngIf="verse.number && (verse.number - .01) <= numRound(verse.number)" title="{{verse.number}}">{{numRound(verse.number)}}</div>
                   <div class="linebreak" *ngIf="verse.linebreak">&nbsp;</div>
                 </div>
               </div>
@@ -43,16 +49,16 @@
         <div class="book">
             <div class="chapter" *ngFor="let chapter of right_chapters">
               <div class="ltr" *ngIf="!chapter.rtl">
-                <div class="verse" *ngFor="let verse of chapter.verses">
-                  <div class="number" *ngIf="verse.number">{{verse.number}}</div>
+                <div class="verse {{verse.classification}}" title="{{verse.number}} - {{verse.classification}}" *ngFor="let verse of chapter.verses">
+                  <div class="number" *ngIf="verse.number && (verse.number - .01) <= numRound(verse.number)" title="{{verse.number}}">{{numRound(verse.number)}}</div>
                   <div class="text">{{verse.text}}</div>
                   <div class="linebreak" *ngIf="verse.linebreak">&nbsp;</div>
                 </div>
               </div>
               <div class="rtl" *ngIf="chapter.rtl">
-                <div class="verse" *ngFor="let verse of chapter.verses">
+                <div class="verse {{verse.classification}}" title="{{verse.number}} - {{verse.classification}}" *ngFor="let verse of chapter.verses">
                   <div class="text">{{verse.text}}</div>
-                  <div class="number" *ngIf="verse.number">{{verse.number}}</div>
+                  <div class="number" *ngIf="verse.number && (verse.number - .01) <= numRound(verse.number)" title="{{verse.number}}">{{numRound(verse.number)}}</div>
                   <div class="linebreak" *ngIf="verse.linebreak">&nbsp;</div>
                 </div>
               </div>

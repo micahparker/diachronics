@@ -24,9 +24,10 @@
     "axios-jsonp": "^1.0.2",
     "core-js": "^2.5.4",
     "font-awesome": "^4.7.0",
+    "lodash": "^4.17.10",
     "ng2-split-pane": "^1.4.0",
     "primeicons": "^1.0.0-beta.6",
-    "primeng": "^6.0.0-beta.1",
+    "primeng": "^6.0.0-rc.1",
     "rxjs": "^6.0.0",
     "zone.js": "^0.8.26"
   },

@@ -69,7 +69,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.showSideMenu = true;
   }
 
-  async click_chapter(book, chapter: number): Promise<void> {
+  click_chapter(book, chapter: number): void {
     this.book = book;
     this.chapter = chapter;
     // clear verses
@@ -82,6 +82,15 @@ export class AppComponent implements OnInit, OnDestroy {
     ]);
     // hide the side menu
     this.showSideMenu = false;
+  }
+
+  click_period(period: Period): void {
+    const filtered = this.periods_selected.filter(p => p.date !== period.date);
+    if (this.periods_selected.length !== filtered.length) {
+      this.periods_selected = filtered;
+    } else {
+      this.periods_selected.push(period);
+    }
   }
 
   async getBibleText(trans: string, book: string, start_chapter: number, start_verse?: number, end_verse?: number): Promise<Chapter> {

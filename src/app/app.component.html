@@ -1,7 +1,6 @@
 <div class="header">
   <div class="book" (click)="click_book()">
-    <i class="fa fa-bars" aria-hidden="true"></i>
-    {{book}} {{chapter}}
+    <i class="fa fa-bars" aria-hidden="true"></i>{{book}} {{chapter}}
   </div>
   <div class="title">Bible "thoughts" with Mark Stone</div>
   <input type="text" pInputText placeholder="Search">
@@ -10,60 +9,56 @@
   <div class="sideMenu-options">
     <p-selectButton [options]="chronologies" [(ngModel)]="chronology_selected"></p-selectButton>
   </div>
-  <p-accordion [activeIndex]="book_num - 1" expandIcon="" collapseIcon="">
+  <div class="onOff">
+    Liminal? <p-inputSwitch [(ngModel)]="showLiminal"></p-inputSwitch>
+  </div>
+  <div class="onOff">
+    One line / verse? <p-inputSwitch [(ngModel)]="showLineByLine"></p-inputSwitch>
+  </div>
+  <div class="onOff">
+    Verse #s? <p-inputSwitch [(ngModel)]="showVerseNumbers"></p-inputSwitch>
+  </div>
+  <p-accordion class="books" [activeIndex]="book_num - 1" expandIcon="" collapseIcon="">
     <div *ngFor="let book of books">
       <p-accordionTab header="{{book.title}}">
         <div class="ui-g">
-            <div class="ui-g-2 chapter" *ngFor="let c of numArray(1, book.num_of_chapters + 1)" (click)="click_chapter(book.title, c)">{{c}}</div>
+          <div class="ui-g-2 chapter" *ngFor="let c of numArray(1, book.num_of_chapters + 1)" (click)="click_chapter(book.title, c)">{{c}}</div>
         </div>
       </p-accordionTab>
     </div>
   </p-accordion>
 </p-sidebar>
-<vertical-split-pane class="split-pane"
-    primary-component-minsize="300"
-    primary-component-initialratio="0.5">
-
+<p-selectButton class="periods" [options]="periods_items" [(ngModel)]="periods_selected" multiple="true">
+  <ng-template let-item>
+    <div class="period" [style.color]="item.value.color_text" title="{{item.value.name}}">
+      <div class="period_abbrev" >{{item.value.abbrev}}</div>
+      <div class="period_date">{{item.value.date}} {{item.value.era}}</div>
+    </div>
+</ng-template>
+</p-selectButton>
+<vertical-split-pane class="split-pane" primary-component-minsize="300" primary-component-initialratio="0.5">
     <div class="split-pane-content-primary">
-        <div class="book">
-          <div class="chapter" *ngFor="let chapter of left_chapters">
-              <div class="ltr" *ngIf="!chapter.rtl">
-                <div class="verse {{verse.classification}}" title="{{verse.number}} - {{verse.classification}}" *ngFor="let verse of chapter.verses">
-                  <div class="number" *ngIf="verse.number && (verse.number - .01) <= numRound(verse.number)" title="{{verse.number}}">{{numRound(verse.number)}}</div>
-                  <div class="text">{{verse.text}}</div>
-                  <div class="linebreak" *ngIf="verse.linebreak">&nbsp;</div>
-                </div>
+        <div class="book book_left">
+          <div class="chapter" *ngFor="let c of left_chapters">
+              <div class="ltr" *ngIf="!c.rtl">
+                <app-chapter [chapter]="c" [aperiods]="periods_selected" [showVerseNumbers]="showVerseNumbers" [showLineByLine]="showLineByLine" [showLiminal]="showLiminal"></app-chapter>
               </div>
-              <div class="rtl" *ngIf="chapter.rtl">
-                <div class="verse {{verse.classification}}" title="{{verse.number}} - {{verse.classification}}" *ngFor="let verse of chapter.verses">
-                  <div class="text">{{verse.text}}</div>
-                  <div class="number" *ngIf="verse.number && (verse.number - .01) <= numRound(verse.number)" title="{{verse.number}}">{{numRound(verse.number)}}</div>
-                  <div class="linebreak" *ngIf="verse.linebreak">&nbsp;</div>
-                </div>
+              <div class="rtl" *ngIf="c.rtl">
+                  <app-chapter [chapter]="c" [aperiods]="periods_selected" [showVerseNumbers]="showVerseNumbers" [showLineByLine]="showLineByLine" [showLiminal]="showLiminal"></app-chapter>
               </div>
           </div>
         </div>
     </div>
-
     <div class="split-pane-content-secondary">
-        <div class="book">
-            <div class="chapter" *ngFor="let chapter of right_chapters">
-              <div class="ltr" *ngIf="!chapter.rtl">
-                <div class="verse {{verse.classification}}" title="{{verse.number}} - {{verse.classification}}" *ngFor="let verse of chapter.verses">
-                  <div class="number" *ngIf="verse.number && (verse.number - .01) <= numRound(verse.number)" title="{{verse.number}}">{{numRound(verse.number)}}</div>
-                  <div class="text">{{verse.text}}</div>
-                  <div class="linebreak" *ngIf="verse.linebreak">&nbsp;</div>
-                </div>
+        <div class="book book_right">
+            <div class="chapter" *ngFor="let c of right_chapters">
+              <div class="ltr" *ngIf="!c.rtl">
+                  <app-chapter [chapter]="c" [aperiods]="periods_selected" [showVerseNumbers]="showVerseNumbers" [showLineByLine]="showLineByLine" [showLiminal]="showLiminal"></app-chapter>
               </div>
-              <div class="rtl" *ngIf="chapter.rtl">
-                <div class="verse {{verse.classification}}" title="{{verse.number}} - {{verse.classification}}" *ngFor="let verse of chapter.verses">
-                  <div class="text">{{verse.text}}</div>
-                  <div class="number" *ngIf="verse.number && (verse.number - .01) <= numRound(verse.number)" title="{{verse.number}}">{{numRound(verse.number)}}</div>
-                  <div class="linebreak" *ngIf="verse.linebreak">&nbsp;</div>
-                </div>
+              <div class="rtl" *ngIf="c.rtl">
+                  <app-chapter [chapter]="c" [aperiods]="periods_selected" [showVerseNumbers]="showVerseNumbers" [showLineByLine]="showLineByLine" [showLiminal]="showLiminal"></app-chapter>
               </div>
             </div>
         </div>
     </div>
-
 </vertical-split-pane>

@@ -1,0 +1,33 @@
+.book .chapter {
+    
+}
+
+.book .chapter .ltr {
+    text-align: left;
+    line-height: 20px;
+}
+
+.book .chapter .ltr .verse .number {
+    padding-right: 5px;
+}
+
+.book .chapter .rtl {
+    text-align: right;
+    line-height: 20px;
+    direction: rtl;
+}
+
+.book .chapter .rtl .verse .number {
+    padding-left: 5px;
+    float:right;
+}
+
+.book .chapter .verse {
+    display: inline;
+}
+
+.book .chapter .verse .number {
+    display: inline;
+    font-weight: bold;
+    color: black;
+}

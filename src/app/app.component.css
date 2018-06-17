@@ -9,8 +9,8 @@
 }
 
 .header {
-    background-color: lightgrey;
-    color: black;
+    background-color: #D9D4DF;
+    color: #422360;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -30,7 +30,7 @@
 }
 
 .header .book i {
-    padding-right: 10px;
+    padding-right: 15px;
 }
 
 .header .title {
@@ -67,6 +67,39 @@
     font-weight: bold;
 }
 
+.sideMenu .onOff {
+    line-height: 35px;
+}
+
+.sideMenu .onOff p-inputswitch { 
+    position: absolute;
+    right: 31px;
+}
+
+.ui-selectbutton {
+    width: 100%;
+    display: table;
+    table-layout: fixed;
+}
+
+.ui-selectbutton .ui-button {
+    display: table-cell;
+}
+
+.ui-selectbutton .ui-button .period:hover {
+    text-decoration: underline;
+}
+
+.ui-selectbutton .ui-button .period_abbrev {
+    padding-top: 5px;
+}
+
+.ui-selectbutton .ui-button .period_date {
+    font-size: 10px;
+    color: gray;
+    padding: 5px;
+}
+
 .split-pane {
     height: calc(100% - 60px) !important;
     display: block;
@@ -80,84 +113,4 @@
     height: 100%;
     padding: 10px;
     overflow-y: auto;
-}
-
-.book .chapter {
-    
-}
-
-.book .chapter .ltr {
-    text-align: left;
-    line-height: 30px;
-}
-
-.book .chapter .rtl {
-    text-align: right;
-    line-height: 20px;
-}
-
-.book .chapter .verse {
-    display: inline;
-}
-
-.book .chapter .verse.BCE-760 .text {
-    color: #D09429;
-}
-
-.book .chapter .verse.BCE-625 .text {
-    color: #7338A7;
-}
-
-.book .chapter .verse.BCE-550 .text {
-    color: #B71A4F;
-}
-
-.book .chapter .verse.BCE-530 .text {
-    color: #507BC3;
-}
-
-.book .chapter .verse.BCE-500 .text {
-    color: #859F4A;
-}
-
-.book .chapter .verse.BCE-450 .text {
-    color: black;
-}
-
-.book .chapter .verse.BCE-425 .text {
-    color: #827570;
-}
-
-.book .chapter .verse.BCE-405 .text {
-    color: #827570;
-    background: #D2D3D6;
-}
-
-.book .chapter .verse.BCE-400 .text {
-    color: #4073B0;
-    background: #DEE8FE;
-}
-
-.book .chapter .verse.BCE-375 .text {
-    color: #57823E;
-    background: #C7E7A8;
-}
-
-.book .chapter .verse .text {
-    display: inline;
-}
-
-.book .chapter .verse .number {
-    display: inline;
-    font-weight: bold;
-    color: black;
-}
-
-.book .chapter .ltr .verse .number {
-    padding-right: 5px;
-}
-
-.book .chapter .rtl .verse .number {
-    padding-left: 5px;
-    float:right;
 }

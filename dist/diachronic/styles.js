@@ -171,7 +171,7 @@ module.exports = "@charset \"UTF-8\";\n.ui-widget {\n  font-family: \"Roboto\", 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "/* You can add global styles to this file, and also import other style files */\n\nhtml, body {\n    margin:0;\n    padding:0;\n    height:100%;\n    width:100%;\n}"
+module.exports = "/* You can add global styles to this file, and also import other style files */\n\nhtml, body {\n    margin: 0;\n    padding: 0;\n    height: 100%;\n    width: 100%;\n    overflow: hidden;\n}"
 
 /***/ }),
 

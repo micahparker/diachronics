@@ -12,15 +12,15 @@
     background-color: #D9D4DF;
     color: #422360;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 50px;
 }
 
 .header .book {
-    display: inline-block;
+    display: inline;
     background-color: gray;
     color: white;
     font-weight: bold;
     font-size: 24px;
-    padding: 16px 40px 15px 20px;
     cursor: pointer;
     text-transform: uppercase;
 }
@@ -30,11 +30,11 @@
 }
 
 .header .book i {
-    padding-right: 15px;
+    padding: 14px 15px 15px 5px;
 }
 
 .header .title {
-    display: inline-block;
+    display: inline;
     font-weight: normal;
     font-size: 25px;
     padding: 15px 0px 0px 40px;
@@ -42,8 +42,8 @@
 
 .header input {
     position: absolute;
-    right: 40px;
-    top: 12px;
+    right: 20px;
+    top: 7px;
     height: 30px;
     width: 20%;
     padding-left: 10px;
@@ -101,7 +101,7 @@
 }
 
 .split-pane {
-    height: calc(100% - 60px) !important;
+    height: calc(100% - 97px) !important;
     display: block;
 }
 

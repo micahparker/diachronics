@@ -55,10 +55,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit() {
     window.addEventListener('scroll', this.scroll, true);
     // init content
-    Promise.all([
-      this.getBibleText('net', this.book, this.chapter).then(v => this.left_chapters.push(v)),
-      this.getBibleText('bhs', this.book, this.chapter).then(v => this.right_chapters.push(v))
-    ]);
+    this.click_chapter(this.book, this.chapter);
   }
 
   ngOnDestroy() {
@@ -69,17 +66,31 @@ export class AppComponent implements OnInit, OnDestroy {
     this.showSideMenu = true;
   }
 
-  click_chapter(book, chapter: number): void {
+  async click_chapter(book: string, chapter: number): Promise<void> {
     this.book = book;
     this.chapter = chapter;
     // clear verses
     this.left_chapters.length = 0;
     this.right_chapters.length = 0;
     // get new content!
-    Promise.all([
+    await Promise.all([
       this.getBibleText('net', this.book, this.chapter).then(v => this.left_chapters.push(v)),
       this.getBibleText('bhs', this.book, this.chapter).then(v => this.right_chapters.push(v))
     ]);
+    // filter periods
+    this.periods_items = this.periods.filter(p => {
+      // tslint:disable-next-line:max-line-length
+      return  this.left_chapters.filter(c => c.verses &&
+                c.verses.filter(v => v.period && v.period.date === p.date && v.period.era === v.period.era).length
+              ).length > 0
+                ||
+              this.right_chapters.filter(c => c.verses &&
+                c.verses.filter(v => v.period && v.period.date === p.date && v.period.era === v.period.era).length
+              ).length > 0
+      ;
+    }).map(p => {
+      return { label: p.abbrev, value: p };
+    });
     // hide the side menu
     this.showSideMenu = false;
   }

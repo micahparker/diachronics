@@ -76,25 +76,45 @@
     right: 31px;
 }
 
-.ui-selectbutton {
+.periods .ui-selectbutton {
     width: 100%;
     display: table;
     table-layout: fixed;
 }
 
-.ui-selectbutton .ui-button {
+.periods .ui-selectbutton .ui-button {
     display: table-cell;
+    padding-top: 5px;
+    background-color: whitesmoke !important;
 }
 
-.ui-selectbutton .ui-button .period:hover {
+.periods .ui-selectbutton .ui-button:hover {
+    background-color: lightgrey !important;
+}
+
+.periods .ui-selectbutton .ui-button.ui-state-active {
+    background-color: #186ba0 !important;
+}
+
+.periods .ui-selectbutton .ui-button.ui-state-active .period_abbrev {
+    background-color: #186ba0 !important;
+    color: white !important;
+}
+
+.periods .ui-selectbutton .ui-button.ui-state-active .period_date {
+    background-color: #186ba0 !important;
+    color: white !important;
+}
+
+.periods .ui-selectbutton .ui-button .period:hover {
     text-decoration: underline;
 }
 
-.ui-selectbutton .ui-button .period_abbrev {
-    padding-top: 5px;
+.periods .ui-selectbutton .ui-button .period_abbrev {
+    padding: 2px 5px 2px 5px;
 }
 
-.ui-selectbutton .ui-button .period_date {
+.periods .ui-selectbutton .ui-button .period_date {
     font-size: 10px;
     color: gray;
     padding: 5px;

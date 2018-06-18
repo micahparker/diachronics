@@ -30,8 +30,8 @@
 </p-sidebar>
 <p-selectButton class="periods" [options]="periods_items" [(ngModel)]="periods_selected" multiple="true">
   <ng-template let-item>
-    <div class="period" [style.color]="item.value.color_text" title="{{item.value.name}}" (click)="click_period(item.value)">
-      <div class="period_abbrev" >{{item.value.abbrev}}</div>
+    <div class="period" title="{{item.value.name}}" (click)="click_period(item.value)">
+      <span class="period_abbrev" [style.color]="item.value.color_text" [style.background-color]="item.value.color_bg">{{item.value.abbrev}}</span>
       <div class="period_date">{{item.value.date}} {{item.value.era}}</div>
     </div>
 </ng-template>

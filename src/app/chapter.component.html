@@ -1,9 +1,10 @@
-<div class="verse" 
+<div *ngFor="let verse of chapter.verses"
     title="{{verse.period?.name}} - {{verse.period?.date}} {{verse.period?.era}}"
     [style.background-color]="verse.period?.color_bg" 
     [style.color]="verse.period?.color_text" 
     [style.display]="aperiods.indexOf(verse.period) > -1 && !showLiminal ? 'none' : 'inherit'"
-    *ngFor="let verse of chapter.verses">
+    class="verse verse_{{numRound(verse.number)}}"
+    [attr.data-number]="verse.number">
   <div class="number" *ngIf="showVerseNumbers && verse.number && (verse.number - .01) <= numRound(verse.number)" title="{{verse.number}}">{{numRound(verse.number)}}</div>
   <span [style.visibility]="aperiods.indexOf(verse.period) > -1 && showLiminal ? 'hidden' : 'visible'">{{verse.text}}</span>
   <div class="linebreak" *ngIf="verse.linebreak">&nbsp;</div>

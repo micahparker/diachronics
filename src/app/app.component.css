@@ -134,3 +134,22 @@
     padding: 10px;
     overflow-y: auto;
 }
+
+.book .chapter_number_hidden {
+    visibility: hidden;
+    position: absolute;
+    right: -10px;
+}
+
+.book .chapter_number {
+    font-weight: bold;
+    font-size: 250%;
+}
+
+.book .ltr .chapter_number {
+    padding: 0 0 20px 5px;
+}
+
+.book .rtl .chapter_number {
+    padding: 0 5px 20px 0;
+}

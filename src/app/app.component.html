@@ -39,24 +39,28 @@
 <vertical-split-pane class="split-pane" primary-component-minsize="300" primary-component-initialratio="0.5">
     <div class="split-pane-content-primary">
         <div class="book book_left">
-          <div class="chapter" *ngFor="let c of left_chapters">
-              <div class="ltr" *ngIf="!c.rtl">
-                <app-chapter [chapter]="c" [aperiods]="periods_selected" [showVerseNumbers]="showVerseNumbers" [showLineByLine]="showLineByLine" [showLiminal]="showLiminal"></app-chapter>
+          <div *ngFor="let chapter of left_chapters" class="chapter chapter_{{chapter.number}}" [attr.data-number]="chapter.number">
+              <div class="ltr" *ngIf="!chapter.rtl">
+                <div class="chapter_number" *ngIf="left_chapters.length > 1">{{chapter.number}}</div>
+                <app-chapter [chapter]="chapter" [aperiods]="periods_selected" [showVerseNumbers]="showVerseNumbers" [showLineByLine]="showLineByLine" [showLiminal]="showLiminal"></app-chapter>
               </div>
-              <div class="rtl" *ngIf="c.rtl">
-                  <app-chapter [chapter]="c" [aperiods]="periods_selected" [showVerseNumbers]="showVerseNumbers" [showLineByLine]="showLineByLine" [showLiminal]="showLiminal"></app-chapter>
+              <div class="rtl" *ngIf="chapter.rtl">
+                <div class="chapter_number" *ngIf="left_chapters.length > 1">{{chapter.number}}</div>
+                <app-chapter [chapter]="chapter" [aperiods]="periods_selected" [showVerseNumbers]="showVerseNumbers" [showLineByLine]="showLineByLine" [showLiminal]="showLiminal"></app-chapter>
               </div>
           </div>
         </div>
     </div>
     <div class="split-pane-content-secondary">
         <div class="book book_right">
-            <div class="chapter" *ngFor="let c of right_chapters">
-              <div class="ltr" *ngIf="!c.rtl">
-                  <app-chapter [chapter]="c" [aperiods]="periods_selected" [showVerseNumbers]="showVerseNumbers" [showLineByLine]="showLineByLine" [showLiminal]="showLiminal"></app-chapter>
+            <div *ngFor="let chapter of right_chapters" class="chapter chapter_{{chapter.number}}" [attr.data-number]="chapter.number">
+              <div class="ltr" *ngIf="!chapter.rtl">
+                <div class="chapter_number" *ngIf="left_chapters.length > 1">{{chapter.number}}</div>
+                <app-chapter [chapter]="chapter" [aperiods]="periods_selected" [showVerseNumbers]="showVerseNumbers" [showLineByLine]="showLineByLine" [showLiminal]="showLiminal"></app-chapter>
               </div>
-              <div class="rtl" *ngIf="c.rtl">
-                  <app-chapter [chapter]="c" [aperiods]="periods_selected" [showVerseNumbers]="showVerseNumbers" [showLineByLine]="showLineByLine" [showLiminal]="showLiminal"></app-chapter>
+              <div class="rtl" *ngIf="chapter.rtl">
+                <div class="chapter_number" *ngIf="left_chapters.length > 1">{{chapter.number}}</div>
+                <app-chapter [chapter]="chapter" [aperiods]="periods_selected" [showVerseNumbers]="showVerseNumbers" [showLineByLine]="showLineByLine" [showLiminal]="showLiminal"></app-chapter>
               </div>
             </div>
         </div>

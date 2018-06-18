@@ -33,7 +33,8 @@ export class AppComponent implements OnInit, OnDestroy {
   books: Book[] = data_books_OT;
   book = 'Genesis';
   book_num = 1;
-  chapter = 2;
+  chapter = 1;
+  verse = 1;
   left_chapters: Chapter[] = [];
   right_chapters: Chapter[] = [];
 
@@ -48,18 +49,26 @@ export class AppComponent implements OnInit, OnDestroy {
   showVerseNumbers = true;
   showLineByLine = false;
   showLiminal = true;
-
-
   showSideMenu = false;
 
+  scroll_bound: null;
+  scroll_processing = false;
+  scroll_chapter: any;
+  scroll_verse: any;
+
   ngOnInit() {
-    window.addEventListener('scroll', this.scroll, true);
+    this.scroll_bound = this.scroll.bind(this);
+    window.addEventListener('scroll', this.scroll_bound, true);
     // init content
-    this.click_chapter(this.book, this.chapter);
+    this.getContent(this.book, this.chapter).then(() =>
+      this.getContent(this.book, this.chapter + 1)
+    ).then( () =>
+      this.getContent(this.book, this.chapter + 2)
+    );
   }
 
   ngOnDestroy() {
-    window.removeEventListener('scroll', this.scroll, true);
+    window.removeEventListener('scroll', this.scroll_bound, true);
   }
 
   click_book(): void {
@@ -69,13 +78,35 @@ export class AppComponent implements OnInit, OnDestroy {
   async click_chapter(book: string, chapter: number): Promise<void> {
     this.book = book;
     this.chapter = chapter;
-    // clear verses
+    // clear chapters
     this.left_chapters.length = 0;
     this.right_chapters.length = 0;
+    // now get the content
+    this.getContent(book, chapter);
+    // hide the side menu
+    this.showSideMenu = false;
+  }
+
+  click_period(period: Period): void {
+    const filtered = this.periods_selected.filter(p => p.date !== period.date);
+    if (this.periods_selected.length !== filtered.length) {
+      this.periods_selected = filtered;
+    } else {
+      this.periods_selected.push(period);
+    }
+  }
+
+  async getContent(book: string, chapter: number) {
     // get new content!
     await Promise.all([
-      this.getBibleText('net', this.book, this.chapter).then(v => this.left_chapters.push(v)),
-      this.getBibleText('bhs', this.book, this.chapter).then(v => this.right_chapters.push(v))
+      this.getBibleText('net', book, chapter).then(v => {
+        this.left_chapters.push(v);
+        this.left_chapters.sort((a, b) => a.number - b.number);
+      }),
+      this.getBibleText('bhs', book, chapter).then(v => {
+        this.right_chapters.push(v);
+        this.right_chapters.sort((a, b) => a.number - b.number);
+      })
     ]);
     // filter periods
     this.periods_items = this.periods.filter(p => {
@@ -91,17 +122,6 @@ export class AppComponent implements OnInit, OnDestroy {
     }).map(p => {
       return { label: p.abbrev, value: p };
     });
-    // hide the side menu
-    this.showSideMenu = false;
-  }
-
-  click_period(period: Period): void {
-    const filtered = this.periods_selected.filter(p => p.date !== period.date);
-    if (this.periods_selected.length !== filtered.length) {
-      this.periods_selected = filtered;
-    } else {
-      this.periods_selected.push(period);
-    }
   }
 
   async getBibleText(trans: string, book: string, start_chapter: number, start_verse?: number, end_verse?: number): Promise<Chapter> {
@@ -285,14 +305,53 @@ export class AppComponent implements OnInit, OnDestroy {
     return JSON.stringify(s);
   }
 
-  scroll(e): void {
-    const leastVisibleChapter = 1;
-    const leastVisibleVerse = 1;
-
-    if (e.target.className.indexOf('book_left') > -1) {
-      console.log(1);
-    } else if (e.target.className.indexOf('book_right') > -1) {
-      console.log(2);
+  async scroll(e): Promise<void> {
+    // tslint:disable:radix
+    if (this.scroll_processing) {
+      return;
     }
+    this.scroll_processing = true;
+    //  ok, we arent already processing so continue
+    const scrollTopThreshold = 20;
+    // detect visible chapters
+    const active_dom_chapters: any[] = Array.from(e.target.querySelectorAll('.chapter')).filter((c: any, i: number) => {
+      if (e.target.scrollTop < scrollTopThreshold && i === 0) {
+        return true;
+      }
+      return (e.target.scrollTop) >= (c.offsetTop - e.target.offsetTop) &&
+        (e.target.scrollTop) < ((c.offsetTop - e.target.offsetTop) + c.offsetHeight);
+    }).reverse();
+    // detect visible verses
+    const active_dom_verses: any[] = Array.from(active_dom_chapters[0].querySelectorAll('.verse')).filter((c: any, i: number) => {
+      if (e.target.scrollTop < ((active_dom_chapters[0].offsetTop - e.target.offsetTop) + scrollTopThreshold) && i === 0) {
+        return true;
+      }
+      return (e.target.scrollTop) >= (c.offsetTop - e.target.offsetTop) &&
+        (e.target.scrollTop) < ((c.offsetTop - e.target.offsetTop) + c.offsetHeight);
+    }).reverse();
+
+    // set global chapter
+    this.chapter = parseInt(active_dom_chapters.length ? active_dom_chapters[0].dataset.number : 1);
+    this.verse = parseInt(active_dom_verses.length ? active_dom_verses[0].dataset.number : 1);
+    // need to load more chapters?
+    if (e.target.scrollTop + e.target.clientHeight >= e.target.scrollHeight - 100) {
+      // set min height so we dont get scroll jump
+      e.target.style.minHeight = e.target.clientHeight;
+      // get the new content
+      await this.getContent(this.book, this.chapter + 1);
+    }
+    // move other pane?
+    if (active_dom_chapters.length && active_dom_verses.length) {
+      const chapterClass = active_dom_chapters[0].className.split(' ').join('.');
+      const verseClass = this.verse > 1 ? active_dom_verses[0].className.split(' ').join('.') : 'chapter_number';
+      // scroll other pane
+      if (e.target.className.indexOf('book_left') > -1) {
+        document.querySelector(`.book_right .${chapterClass} .${verseClass}`).scrollIntoView();
+      } else if (e.target.className.indexOf('book_right') > -1) {
+        document.querySelector(`.book_left .${chapterClass} .${verseClass}`).scrollIntoView();
+      }
+    }
+    // ok, let scrolling trigger again... with timeout otherwise it causes a ping pong effect
+    setTimeout(() => this.scroll_processing = false, 100);
   }
 }

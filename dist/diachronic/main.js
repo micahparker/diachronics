@@ -41,7 +41,7 @@ module.exports = ":host {\n    display: block;\n    height: 100%;\n    overflow:
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"header\">\n  <div class=\"book\" (click)=\"click_book()\">\n    <i class=\"fa fa-bars\" aria-hidden=\"true\"></i>{{book}} {{chapter}}\n  </div>\n  <div class=\"title\">Bible \"thoughts\" with Mark Stone</div>\n  <input type=\"text\" pInputText placeholder=\"Search\">\n</div>\n<p-sidebar [(visible)]=\"showSideMenu\" class=\"sideMenu\">\n  <div class=\"sideMenu-options\">\n    <p-selectButton [options]=\"chronologies\" [(ngModel)]=\"chronology_selected\"></p-selectButton>\n  </div>\n  <div class=\"onOff\">\n    Liminal? <p-inputSwitch [(ngModel)]=\"showLiminal\"></p-inputSwitch>\n  </div>\n  <div class=\"onOff\">\n    One line / verse? <p-inputSwitch [(ngModel)]=\"showLineByLine\"></p-inputSwitch>\n  </div>\n  <div class=\"onOff\">\n    Verse #s? <p-inputSwitch [(ngModel)]=\"showVerseNumbers\"></p-inputSwitch>\n  </div>\n  <p-accordion class=\"books\" [activeIndex]=\"book_num - 1\" expandIcon=\"\" collapseIcon=\"\">\n    <div *ngFor=\"let book of books\">\n      <p-accordionTab header=\"{{book.title}}\">\n        <div class=\"ui-g\">\n          <div class=\"ui-g-2 chapter\" *ngFor=\"let c of numArray(1, book.num_of_chapters + 1)\" (click)=\"click_chapter(book.title, c)\">{{c}}</div>\n        </div>\n      </p-accordionTab>\n    </div>\n  </p-accordion>\n</p-sidebar>\n<p-selectButton class=\"periods\" [options]=\"periods_items\" [(ngModel)]=\"periods_selected\" multiple=\"true\">\n  <ng-template let-item>\n    <div class=\"period\" [style.color]=\"item.value.color_text\" title=\"{{item.value.name}}\">\n      <div class=\"period_abbrev\" >{{item.value.abbrev}}</div>\n      <div class=\"period_date\">{{item.value.date}} {{item.value.era}}</div>\n    </div>\n</ng-template>\n</p-selectButton>\n<vertical-split-pane class=\"split-pane\" primary-component-minsize=\"300\" primary-component-initialratio=\"0.5\">\n    <div class=\"split-pane-content-primary\">\n        <div class=\"book book_left\">\n          <div class=\"chapter\" *ngFor=\"let c of left_chapters\">\n              <div class=\"ltr\" *ngIf=\"!c.rtl\">\n                <app-chapter [chapter]=\"c\" [aperiods]=\"periods_selected\" [showVerseNumbers]=\"showVerseNumbers\" [showLineByLine]=\"showLineByLine\" [showLiminal]=\"showLiminal\"></app-chapter>\n              </div>\n              <div class=\"rtl\" *ngIf=\"c.rtl\">\n                  <app-chapter [chapter]=\"c\" [aperiods]=\"periods_selected\" [showVerseNumbers]=\"showVerseNumbers\" [showLineByLine]=\"showLineByLine\" [showLiminal]=\"showLiminal\"></app-chapter>\n              </div>\n          </div>\n        </div>\n    </div>\n    <div class=\"split-pane-content-secondary\">\n        <div class=\"book book_right\">\n            <div class=\"chapter\" *ngFor=\"let c of right_chapters\">\n              <div class=\"ltr\" *ngIf=\"!c.rtl\">\n                  <app-chapter [chapter]=\"c\" [aperiods]=\"periods_selected\" [showVerseNumbers]=\"showVerseNumbers\" [showLineByLine]=\"showLineByLine\" [showLiminal]=\"showLiminal\"></app-chapter>\n              </div>\n              <div class=\"rtl\" *ngIf=\"c.rtl\">\n                  <app-chapter [chapter]=\"c\" [aperiods]=\"periods_selected\" [showVerseNumbers]=\"showVerseNumbers\" [showLineByLine]=\"showLineByLine\" [showLiminal]=\"showLiminal\"></app-chapter>\n              </div>\n            </div>\n        </div>\n    </div>\n</vertical-split-pane>"
+module.exports = "<div class=\"header\">\n  <div class=\"book\" (click)=\"click_book()\">\n    <i class=\"fa fa-bars\" aria-hidden=\"true\"></i>{{book}} {{chapter}}\n  </div>\n  <div class=\"title\">Bible \"thoughts\" with Mark Stone</div>\n  <input type=\"text\" pInputText placeholder=\"Search\">\n</div>\n<p-sidebar [(visible)]=\"showSideMenu\" class=\"sideMenu\">\n  <div class=\"sideMenu-options\">\n    <p-selectButton [options]=\"chronologies\" [(ngModel)]=\"chronology_selected\"></p-selectButton>\n  </div>\n  <div class=\"onOff\">\n    Liminal? <p-inputSwitch [(ngModel)]=\"showLiminal\"></p-inputSwitch>\n  </div>\n  <div class=\"onOff\">\n    One line / verse? <p-inputSwitch [(ngModel)]=\"showLineByLine\"></p-inputSwitch>\n  </div>\n  <div class=\"onOff\">\n    Verse #s? <p-inputSwitch [(ngModel)]=\"showVerseNumbers\"></p-inputSwitch>\n  </div>\n  <p-accordion class=\"books\" [activeIndex]=\"book_num - 1\" expandIcon=\"\" collapseIcon=\"\">\n    <div *ngFor=\"let book of books\">\n      <p-accordionTab header=\"{{book.title}}\">\n        <div class=\"ui-g\">\n          <div class=\"ui-g-2 chapter\" *ngFor=\"let c of numArray(1, book.num_of_chapters + 1)\" (click)=\"click_chapter(book.title, c)\">{{c}}</div>\n        </div>\n      </p-accordionTab>\n    </div>\n  </p-accordion>\n</p-sidebar>\n<p-selectButton class=\"periods\" [options]=\"periods_items\" [(ngModel)]=\"periods_selected\" multiple=\"true\">\n  <ng-template let-item>\n    <div class=\"period\" [style.color]=\"item.value.color_text\" title=\"{{item.value.name}}\" (click)=\"click_period(item.value)\">\n      <div class=\"period_abbrev\" >{{item.value.abbrev}}</div>\n      <div class=\"period_date\">{{item.value.date}} {{item.value.era}}</div>\n    </div>\n</ng-template>\n</p-selectButton>\n<vertical-split-pane class=\"split-pane\" primary-component-minsize=\"300\" primary-component-initialratio=\"0.5\">\n    <div class=\"split-pane-content-primary\">\n        <div class=\"book book_left\">\n          <div class=\"chapter\" *ngFor=\"let c of left_chapters\">\n              <div class=\"ltr\" *ngIf=\"!c.rtl\">\n                <app-chapter [chapter]=\"c\" [aperiods]=\"periods_selected\" [showVerseNumbers]=\"showVerseNumbers\" [showLineByLine]=\"showLineByLine\" [showLiminal]=\"showLiminal\"></app-chapter>\n              </div>\n              <div class=\"rtl\" *ngIf=\"c.rtl\">\n                  <app-chapter [chapter]=\"c\" [aperiods]=\"periods_selected\" [showVerseNumbers]=\"showVerseNumbers\" [showLineByLine]=\"showLineByLine\" [showLiminal]=\"showLiminal\"></app-chapter>\n              </div>\n          </div>\n        </div>\n    </div>\n    <div class=\"split-pane-content-secondary\">\n        <div class=\"book book_right\">\n            <div class=\"chapter\" *ngFor=\"let c of right_chapters\">\n              <div class=\"ltr\" *ngIf=\"!c.rtl\">\n                  <app-chapter [chapter]=\"c\" [aperiods]=\"periods_selected\" [showVerseNumbers]=\"showVerseNumbers\" [showLineByLine]=\"showLineByLine\" [showLiminal]=\"showLiminal\"></app-chapter>\n              </div>\n              <div class=\"rtl\" *ngIf=\"c.rtl\">\n                  <app-chapter [chapter]=\"c\" [aperiods]=\"periods_selected\" [showVerseNumbers]=\"showVerseNumbers\" [showLineByLine]=\"showLineByLine\" [showLiminal]=\"showLiminal\"></app-chapter>\n              </div>\n            </div>\n        </div>\n    </div>\n</vertical-split-pane>"
 
 /***/ }),
 
@@ -156,24 +156,28 @@ var AppComponent = /** @class */ (function () {
         this.showSideMenu = true;
     };
     AppComponent.prototype.click_chapter = function (book, chapter) {
-        return __awaiter(this, void 0, void 0, function () {
-            var _this = this;
-            return __generator(this, function (_a) {
-                this.book = book;
-                this.chapter = chapter;
-                // clear verses
-                this.left_chapters.length = 0;
-                this.right_chapters.length = 0;
-                // get new content!
-                Promise.all([
-                    this.getBibleText('net', this.book, this.chapter).then(function (v) { return _this.left_chapters.push(v); }),
-                    this.getBibleText('bhs', this.book, this.chapter).then(function (v) { return _this.right_chapters.push(v); })
-                ]);
-                // hide the side menu
-                this.showSideMenu = false;
-                return [2 /*return*/];
-            });
-        });
+        var _this = this;
+        this.book = book;
+        this.chapter = chapter;
+        // clear verses
+        this.left_chapters.length = 0;
+        this.right_chapters.length = 0;
+        // get new content!
+        Promise.all([
+            this.getBibleText('net', this.book, this.chapter).then(function (v) { return _this.left_chapters.push(v); }),
+            this.getBibleText('bhs', this.book, this.chapter).then(function (v) { return _this.right_chapters.push(v); })
+        ]);
+        // hide the side menu
+        this.showSideMenu = false;
+    };
+    AppComponent.prototype.click_period = function (period) {
+        var filtered = this.periods_selected.filter(function (p) { return p.date !== period.date; });
+        if (this.periods_selected.length !== filtered.length) {
+            this.periods_selected = filtered;
+        }
+        else {
+            this.periods_selected.push(period);
+        }
     };
     AppComponent.prototype.getBibleText = function (trans, book, start_chapter, start_verse, end_verse) {
         return __awaiter(this, void 0, void 0, function () {

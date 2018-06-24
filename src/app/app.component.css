@@ -25,7 +25,7 @@
     text-transform: uppercase;
 }
 
-.header .book:hover {
+.header .book span:hover {
     text-decoration: underline;
 }
 
@@ -53,9 +53,8 @@
     border: 0;
 }
 
-.sideMenu .sideMenu-options {
-    padding-top: 20px;
-    padding-bottom: 20px;
+.sideMenu.books .ui-sidebar{
+    overflow-y: auto;
 }
 
 .sideMenu .chapter {
@@ -65,6 +64,16 @@
 .sideMenu .chapter:hover {
     text-decoration: underline;
     font-weight: bold;
+}
+
+
+.sideMenu .ui-selectbutton {
+    width:100%;
+    margin-top: 10px;
+}
+
+.sideMenu .ui-selectbutton .ui-button {
+    width: 50%;
 }
 
 .sideMenu .onOff {

@@ -1,5 +1,5 @@
 <div *ngFor="let verse of chapter.verses"
-    title="{{verse.period?.name}} - {{verse.period?.date}} {{verse.period?.era}}"
+    title="{{verse.period?.name}} - {{verse.period?.date}} BCE"
     [style.background-color]="verse.period?.color_bg" 
     [style.color]="verse.period?.color_text" 
     [style.display]="aperiods.indexOf(verse.period) > -1 && !showLiminal ? 'none' : 'inherit'"

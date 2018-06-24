@@ -30,7 +30,7 @@ webpackEmptyAsyncContext.id = "./src/$$_lazy_route_resource lazy recursive";
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ":host {\n    display: block;\n    height: 100%;\n    overflow: hidden;\n}\n\n.logo {\n    font-size: 30px;\n}\n\n.header {\n    background-color: #D9D4DF;\n    color: #422360;\n    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n    height: 50px;\n}\n\n.header .book {\n    display: inline;\n    background-color: gray;\n    color: white;\n    font-weight: bold;\n    font-size: 24px;\n    cursor: pointer;\n    text-transform: uppercase;\n}\n\n.header .book:hover {\n    text-decoration: underline;\n}\n\n.header .book i {\n    padding: 14px 15px 15px 5px;\n}\n\n.header .title {\n    display: inline;\n    font-weight: normal;\n    font-size: 25px;\n    padding: 15px 0px 0px 40px;\n}\n\n.header input {\n    position: absolute;\n    right: 20px;\n    top: 7px;\n    height: 30px;\n    width: 20%;\n    padding-left: 10px;\n}\n\n.ui-accordion-header.ui-state-active {\n    border: 0;\n}\n\n.sideMenu .sideMenu-options {\n    padding-top: 20px;\n    padding-bottom: 20px;\n}\n\n.sideMenu .chapter {\n    cursor: pointer;\n}\n\n.sideMenu .chapter:hover {\n    text-decoration: underline;\n    font-weight: bold;\n}\n\n.sideMenu .onOff {\n    line-height: 35px;\n}\n\n.sideMenu .onOff p-inputswitch { \n    position: absolute;\n    right: 31px;\n}\n\n.ui-selectbutton {\n    width: 100%;\n    display: table;\n    table-layout: fixed;\n}\n\n.ui-selectbutton .ui-button {\n    display: table-cell;\n}\n\n.ui-selectbutton .ui-button .period:hover {\n    text-decoration: underline;\n}\n\n.ui-selectbutton .ui-button .period_abbrev {\n    padding-top: 5px;\n}\n\n.ui-selectbutton .ui-button .period_date {\n    font-size: 10px;\n    color: gray;\n    padding: 5px;\n}\n\n.split-pane {\n    height: calc(100% - 97px) !important;\n    display: block;\n}\n\n.split-pane-content-primary, .split-pane-content-secondary {\n    height: calc(100% - 20px) !important;\n}\n\n.book {\n    height: 100%;\n    padding: 10px;\n    overflow-y: auto;\n}"
+module.exports = ":host {\n    display: block;\n    height: 100%;\n    overflow: hidden;\n}\n\n.logo {\n    font-size: 30px;\n}\n\n.header {\n    background-color: #D9D4DF;\n    color: #422360;\n    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n    height: 50px;\n}\n\n.header .book {\n    display: inline;\n    background-color: gray;\n    color: white;\n    font-weight: bold;\n    font-size: 24px;\n    cursor: pointer;\n    text-transform: uppercase;\n}\n\n.header .book:hover {\n    text-decoration: underline;\n}\n\n.header .book i {\n    padding: 14px 15px 15px 5px;\n}\n\n.header .title {\n    display: inline;\n    font-weight: normal;\n    font-size: 25px;\n    padding: 15px 0px 0px 40px;\n}\n\n.header input {\n    position: absolute;\n    right: 20px;\n    top: 7px;\n    height: 30px;\n    width: 20%;\n    padding-left: 10px;\n}\n\n.ui-accordion-header.ui-state-active {\n    border: 0;\n}\n\n.sideMenu .sideMenu-options {\n    padding-top: 20px;\n    padding-bottom: 20px;\n}\n\n.sideMenu .chapter {\n    cursor: pointer;\n}\n\n.sideMenu .chapter:hover {\n    text-decoration: underline;\n    font-weight: bold;\n}\n\n.sideMenu .onOff {\n    line-height: 35px;\n}\n\n.sideMenu .onOff p-inputswitch { \n    position: absolute;\n    right: 31px;\n}\n\n.periods .ui-selectbutton {\n    width: 100%;\n    display: table;\n    table-layout: fixed;\n}\n\n.periods .ui-selectbutton .ui-button {\n    display: table-cell;\n    padding-top: 5px;\n    background-color: whitesmoke !important;\n}\n\n.periods .ui-selectbutton .ui-button:hover {\n    background-color: lightgrey !important;\n}\n\n.periods .ui-selectbutton .ui-button.ui-state-active {\n    background-color: #186ba0 !important;\n}\n\n.periods .ui-selectbutton .ui-button.ui-state-active .period_abbrev {\n    background-color: #186ba0 !important;\n    color: white !important;\n}\n\n.periods .ui-selectbutton .ui-button.ui-state-active .period_date {\n    background-color: #186ba0 !important;\n    color: white !important;\n}\n\n.periods .ui-selectbutton .ui-button .period:hover {\n    text-decoration: underline;\n}\n\n.periods .ui-selectbutton .ui-button .period_abbrev {\n    padding: 2px 5px 2px 5px;\n}\n\n.periods .ui-selectbutton .ui-button .period_date {\n    font-size: 10px;\n    color: gray;\n    padding: 5px;\n}\n\n.split-pane {\n    height: calc(100% - 97px) !important;\n    display: block;\n}\n\n.split-pane-content-primary, .split-pane-content-secondary {\n    height: calc(100% - 20px) !important;\n}\n\n.book {\n    height: 100%;\n    padding: 10px;\n    overflow-y: auto;\n}\n\n.book .chapter_number_hidden {\n    visibility: hidden;\n    position: absolute;\n    right: -10px;\n}\n\n.book .chapter_number {\n    font-weight: bold;\n    font-size: 250%;\n}\n\n.book .ltr .chapter_number {\n    padding: 0 0 20px 5px;\n}\n\n.book .rtl .chapter_number {\n    padding: 0 5px 20px 0;\n}"
 
 /***/ }),
 
@@ -41,7 +41,7 @@ module.exports = ":host {\n    display: block;\n    height: 100%;\n    overflow:
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"header\">\n  <div class=\"book\" (click)=\"click_book()\">\n    <i class=\"fa fa-bars\" aria-hidden=\"true\"></i>{{book}} {{chapter}}\n  </div>\n  <div class=\"title\">Bible \"thoughts\" with Mark Stone</div>\n  <input type=\"text\" pInputText placeholder=\"Search\">\n</div>\n<p-sidebar [(visible)]=\"showSideMenu\" class=\"sideMenu\">\n  <div class=\"sideMenu-options\">\n    <p-selectButton [options]=\"chronologies\" [(ngModel)]=\"chronology_selected\"></p-selectButton>\n  </div>\n  <div class=\"onOff\">\n    Liminal? <p-inputSwitch [(ngModel)]=\"showLiminal\"></p-inputSwitch>\n  </div>\n  <div class=\"onOff\">\n    One line / verse? <p-inputSwitch [(ngModel)]=\"showLineByLine\"></p-inputSwitch>\n  </div>\n  <div class=\"onOff\">\n    Verse #s? <p-inputSwitch [(ngModel)]=\"showVerseNumbers\"></p-inputSwitch>\n  </div>\n  <p-accordion class=\"books\" [activeIndex]=\"book_num - 1\" expandIcon=\"\" collapseIcon=\"\">\n    <div *ngFor=\"let book of books\">\n      <p-accordionTab header=\"{{book.title}}\">\n        <div class=\"ui-g\">\n          <div class=\"ui-g-2 chapter\" *ngFor=\"let c of numArray(1, book.num_of_chapters + 1)\" (click)=\"click_chapter(book.title, c)\">{{c}}</div>\n        </div>\n      </p-accordionTab>\n    </div>\n  </p-accordion>\n</p-sidebar>\n<p-selectButton class=\"periods\" [options]=\"periods_items\" [(ngModel)]=\"periods_selected\" multiple=\"true\">\n  <ng-template let-item>\n    <div class=\"period\" [style.color]=\"item.value.color_text\" title=\"{{item.value.name}}\" (click)=\"click_period(item.value)\">\n      <div class=\"period_abbrev\" >{{item.value.abbrev}}</div>\n      <div class=\"period_date\">{{item.value.date}} {{item.value.era}}</div>\n    </div>\n</ng-template>\n</p-selectButton>\n<vertical-split-pane class=\"split-pane\" primary-component-minsize=\"300\" primary-component-initialratio=\"0.5\">\n    <div class=\"split-pane-content-primary\">\n        <div class=\"book book_left\">\n          <div class=\"chapter\" *ngFor=\"let c of left_chapters\">\n              <div class=\"ltr\" *ngIf=\"!c.rtl\">\n                <app-chapter [chapter]=\"c\" [aperiods]=\"periods_selected\" [showVerseNumbers]=\"showVerseNumbers\" [showLineByLine]=\"showLineByLine\" [showLiminal]=\"showLiminal\"></app-chapter>\n              </div>\n              <div class=\"rtl\" *ngIf=\"c.rtl\">\n                  <app-chapter [chapter]=\"c\" [aperiods]=\"periods_selected\" [showVerseNumbers]=\"showVerseNumbers\" [showLineByLine]=\"showLineByLine\" [showLiminal]=\"showLiminal\"></app-chapter>\n              </div>\n          </div>\n        </div>\n    </div>\n    <div class=\"split-pane-content-secondary\">\n        <div class=\"book book_right\">\n            <div class=\"chapter\" *ngFor=\"let c of right_chapters\">\n              <div class=\"ltr\" *ngIf=\"!c.rtl\">\n                  <app-chapter [chapter]=\"c\" [aperiods]=\"periods_selected\" [showVerseNumbers]=\"showVerseNumbers\" [showLineByLine]=\"showLineByLine\" [showLiminal]=\"showLiminal\"></app-chapter>\n              </div>\n              <div class=\"rtl\" *ngIf=\"c.rtl\">\n                  <app-chapter [chapter]=\"c\" [aperiods]=\"periods_selected\" [showVerseNumbers]=\"showVerseNumbers\" [showLineByLine]=\"showLineByLine\" [showLiminal]=\"showLiminal\"></app-chapter>\n              </div>\n            </div>\n        </div>\n    </div>\n</vertical-split-pane>"
+module.exports = "<div class=\"header\">\n  <div class=\"book\" (click)=\"click_book()\">\n    <i class=\"fa fa-bars\" aria-hidden=\"true\"></i>{{book}} {{chapter}}\n  </div>\n  <div class=\"title\">Bible \"thoughts\" with Mark Stone</div>\n  <input type=\"text\" pInputText placeholder=\"Search\">\n</div>\n<p-sidebar [(visible)]=\"showSideMenu\" class=\"sideMenu\">\n  <div class=\"sideMenu-options\">\n    <p-selectButton [options]=\"chronologies\" [(ngModel)]=\"chronology_selected\"></p-selectButton>\n  </div>\n  <div class=\"onOff\">\n    Liminal? <p-inputSwitch [(ngModel)]=\"showLiminal\"></p-inputSwitch>\n  </div>\n  <div class=\"onOff\">\n    One line / verse? <p-inputSwitch [(ngModel)]=\"showLineByLine\"></p-inputSwitch>\n  </div>\n  <div class=\"onOff\">\n    Verse #s? <p-inputSwitch [(ngModel)]=\"showVerseNumbers\"></p-inputSwitch>\n  </div>\n  <p-accordion class=\"books\" [activeIndex]=\"book_num - 1\" expandIcon=\"\" collapseIcon=\"\">\n    <div *ngFor=\"let book of books\">\n      <p-accordionTab header=\"{{book.title}}\">\n        <div class=\"ui-g\">\n          <div class=\"ui-g-2 chapter\" *ngFor=\"let c of numArray(1, book.num_of_chapters + 1)\" (click)=\"click_chapter(book.title, c)\">{{c}}</div>\n        </div>\n      </p-accordionTab>\n    </div>\n  </p-accordion>\n</p-sidebar>\n<p-selectButton class=\"periods\" [options]=\"periods_items\" [(ngModel)]=\"periods_selected\" multiple=\"true\">\n  <ng-template let-item>\n    <div class=\"period\" title=\"{{item.value.name}}\" (click)=\"click_period(item.value)\">\n      <span class=\"period_abbrev\" [style.color]=\"item.value.color_text\" [style.background-color]=\"item.value.color_bg\">{{item.value.abbrev}}</span>\n      <div class=\"period_date\">{{item.value.date}} {{item.value.era}}</div>\n    </div>\n</ng-template>\n</p-selectButton>\n<vertical-split-pane class=\"split-pane\" primary-component-minsize=\"300\" primary-component-initialratio=\"0.5\">\n    <div class=\"split-pane-content-primary\">\n        <div class=\"book book_left\">\n          <div *ngFor=\"let chapter of left_chapters\" class=\"chapter chapter_{{chapter.number}}\" [attr.data-number]=\"chapter.number\">\n              <div class=\"ltr\" *ngIf=\"!chapter.rtl\">\n                <div class=\"chapter_number\" *ngIf=\"left_chapters.length > 1\">{{chapter.number}}</div>\n                <app-chapter [chapter]=\"chapter\" [aperiods]=\"periods_selected\" [showVerseNumbers]=\"showVerseNumbers\" [showLineByLine]=\"showLineByLine\" [showLiminal]=\"showLiminal\"></app-chapter>\n              </div>\n              <div class=\"rtl\" *ngIf=\"chapter.rtl\">\n                <div class=\"chapter_number\" *ngIf=\"left_chapters.length > 1\">{{chapter.number}}</div>\n                <app-chapter [chapter]=\"chapter\" [aperiods]=\"periods_selected\" [showVerseNumbers]=\"showVerseNumbers\" [showLineByLine]=\"showLineByLine\" [showLiminal]=\"showLiminal\"></app-chapter>\n              </div>\n          </div>\n        </div>\n    </div>\n    <div class=\"split-pane-content-secondary\">\n        <div class=\"book book_right\">\n            <div *ngFor=\"let chapter of right_chapters\" class=\"chapter chapter_{{chapter.number}}\" [attr.data-number]=\"chapter.number\">\n              <div class=\"ltr\" *ngIf=\"!chapter.rtl\">\n                <div class=\"chapter_number\" *ngIf=\"left_chapters.length > 1\">{{chapter.number}}</div>\n                <app-chapter [chapter]=\"chapter\" [aperiods]=\"periods_selected\" [showVerseNumbers]=\"showVerseNumbers\" [showLineByLine]=\"showLineByLine\" [showLiminal]=\"showLiminal\"></app-chapter>\n              </div>\n              <div class=\"rtl\" *ngIf=\"chapter.rtl\">\n                <div class=\"chapter_number\" *ngIf=\"left_chapters.length > 1\">{{chapter.number}}</div>\n                <app-chapter [chapter]=\"chapter\" [aperiods]=\"periods_selected\" [showVerseNumbers]=\"showVerseNumbers\" [showLineByLine]=\"showLineByLine\" [showLiminal]=\"showLiminal\"></app-chapter>\n              </div>\n            </div>\n        </div>\n    </div>\n</vertical-split-pane>"
 
 /***/ }),
 
@@ -125,7 +125,8 @@ var AppComponent = /** @class */ (function () {
         this.books = _data_books_OT__WEBPACK_IMPORTED_MODULE_4__["default"];
         this.book = 'Genesis';
         this.book_num = 1;
-        this.chapter = 2;
+        this.chapter = 1;
+        this.verse = 1;
         this.left_chapters = [];
         this.right_chapters = [];
         this.chronologies = [
@@ -139,36 +140,40 @@ var AppComponent = /** @class */ (function () {
         this.showLineByLine = false;
         this.showLiminal = true;
         this.showSideMenu = false;
+        this.scroll_processing = false;
     }
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;
-        window.addEventListener('scroll', this.scroll, true);
+        this.scroll_bound = this.scroll.bind(this);
+        window.addEventListener('scroll', this.scroll_bound, true);
         // init content
-        Promise.all([
-            this.getBibleText('net', this.book, this.chapter).then(function (v) { return _this.left_chapters.push(v); }),
-            this.getBibleText('bhs', this.book, this.chapter).then(function (v) { return _this.right_chapters.push(v); })
-        ]);
+        this.getContent(this.book, this.chapter).then(function () {
+            return _this.getContent(_this.book, _this.chapter + 1);
+        }).then(function () {
+            return _this.getContent(_this.book, _this.chapter + 2);
+        });
     };
     AppComponent.prototype.ngOnDestroy = function () {
-        window.removeEventListener('scroll', this.scroll, true);
+        window.removeEventListener('scroll', this.scroll_bound, true);
     };
     AppComponent.prototype.click_book = function () {
         this.showSideMenu = true;
     };
     AppComponent.prototype.click_chapter = function (book, chapter) {
-        var _this = this;
-        this.book = book;
-        this.chapter = chapter;
-        // clear verses
-        this.left_chapters.length = 0;
-        this.right_chapters.length = 0;
-        // get new content!
-        Promise.all([
-            this.getBibleText('net', this.book, this.chapter).then(function (v) { return _this.left_chapters.push(v); }),
-            this.getBibleText('bhs', this.book, this.chapter).then(function (v) { return _this.right_chapters.push(v); })
-        ]);
-        // hide the side menu
-        this.showSideMenu = false;
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                this.book = book;
+                this.chapter = chapter;
+                // clear chapters
+                this.left_chapters.length = 0;
+                this.right_chapters.length = 0;
+                // now get the content
+                this.getContent(book, chapter);
+                // hide the side menu
+                this.showSideMenu = false;
+                return [2 /*return*/];
+            });
+        });
     };
     AppComponent.prototype.click_period = function (period) {
         var filtered = this.periods_selected.filter(function (p) { return p.date !== period.date; });
@@ -178,6 +183,42 @@ var AppComponent = /** @class */ (function () {
         else {
             this.periods_selected.push(period);
         }
+    };
+    AppComponent.prototype.getContent = function (book, chapter) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: 
+                    // get new content!
+                    return [4 /*yield*/, Promise.all([
+                            this.getBibleText('net', book, chapter).then(function (v) {
+                                _this.left_chapters.push(v);
+                                _this.left_chapters.sort(function (a, b) { return a.number - b.number; });
+                            }),
+                            this.getBibleText('bhs', book, chapter).then(function (v) {
+                                _this.right_chapters.push(v);
+                                _this.right_chapters.sort(function (a, b) { return a.number - b.number; });
+                            })
+                        ])];
+                    case 1:
+                        // get new content!
+                        _a.sent();
+                        // filter periods
+                        this.periods_items = this.periods.filter(function (p) {
+                            // tslint:disable-next-line:max-line-length
+                            return _this.left_chapters.filter(function (c) { return c.verses &&
+                                c.verses.filter(function (v) { return v.period && v.period.date === p.date && v.period.era === v.period.era; }).length; }).length > 0
+                                ||
+                                    _this.right_chapters.filter(function (c) { return c.verses &&
+                                        c.verses.filter(function (v) { return v.period && v.period.date === p.date && v.period.era === v.period.era; }).length; }).length > 0;
+                        }).map(function (p) {
+                            return { label: p.abbrev, value: p };
+                        });
+                        return [2 /*return*/];
+                }
+            });
+        });
     };
     AppComponent.prototype.getBibleText = function (trans, book, start_chapter, start_verse, end_verse) {
         return __awaiter(this, void 0, void 0, function () {
@@ -361,14 +402,63 @@ var AppComponent = /** @class */ (function () {
         return JSON.stringify(s);
     };
     AppComponent.prototype.scroll = function (e) {
-        var leastVisibleChapter = 1;
-        var leastVisibleVerse = 1;
-        if (e.target.className.indexOf('book_left') > -1) {
-            console.log(1);
-        }
-        else if (e.target.className.indexOf('book_right') > -1) {
-            console.log(2);
-        }
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            var scrollTopThreshold, active_dom_chapters, active_dom_verses, chapterClass, verseClass;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        // tslint:disable:radix
+                        if (this.scroll_processing) {
+                            return [2 /*return*/];
+                        }
+                        this.scroll_processing = true;
+                        scrollTopThreshold = 20;
+                        active_dom_chapters = Array.from(e.target.querySelectorAll('.chapter')).filter(function (c, i) {
+                            if (e.target.scrollTop < scrollTopThreshold && i === 0) {
+                                return true;
+                            }
+                            return (e.target.scrollTop) >= (c.offsetTop - e.target.offsetTop) &&
+                                (e.target.scrollTop) < ((c.offsetTop - e.target.offsetTop) + c.offsetHeight);
+                        }).reverse();
+                        active_dom_verses = Array.from(active_dom_chapters[0].querySelectorAll('.verse')).filter(function (c, i) {
+                            if (e.target.scrollTop < ((active_dom_chapters[0].offsetTop - e.target.offsetTop) + scrollTopThreshold) && i === 0) {
+                                return true;
+                            }
+                            return (e.target.scrollTop) >= (c.offsetTop - e.target.offsetTop) &&
+                                (e.target.scrollTop) < ((c.offsetTop - e.target.offsetTop) + c.offsetHeight);
+                        }).reverse();
+                        // set global chapter
+                        this.chapter = parseInt(active_dom_chapters.length ? active_dom_chapters[0].dataset.number : 1);
+                        this.verse = parseInt(active_dom_verses.length ? active_dom_verses[0].dataset.number : 1);
+                        if (!(e.target.scrollTop + e.target.clientHeight >= e.target.scrollHeight - 100)) return [3 /*break*/, 2];
+                        // set min height so we dont get scroll jump
+                        e.target.style.minHeight = e.target.clientHeight;
+                        // get the new content
+                        return [4 /*yield*/, this.getContent(this.book, this.chapter + 1)];
+                    case 1:
+                        // get the new content
+                        _a.sent();
+                        _a.label = 2;
+                    case 2:
+                        // move other pane?
+                        if (active_dom_chapters.length && active_dom_verses.length) {
+                            chapterClass = active_dom_chapters[0].className.split(' ').join('.');
+                            verseClass = this.verse > 1 ? active_dom_verses[0].className.split(' ').join('.') : 'chapter_number';
+                            // scroll other pane
+                            if (e.target.className.indexOf('book_left') > -1) {
+                                document.querySelector(".book_right ." + chapterClass + " ." + verseClass).scrollIntoView();
+                            }
+                            else if (e.target.className.indexOf('book_right') > -1) {
+                                document.querySelector(".book_left ." + chapterClass + " ." + verseClass).scrollIntoView();
+                            }
+                        }
+                        // ok, let scrolling trigger again... with timeout otherwise it causes a ping pong effect
+                        setTimeout(function () { return _this.scroll_processing = false; }, 100);
+                        return [2 /*return*/];
+                }
+            });
+        });
     };
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -480,7 +570,7 @@ module.exports = ".book .chapter {\n    \n}\n\n.book .chapter .ltr {\n    text-a
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"verse\" \n    title=\"{{verse.period?.name}} - {{verse.period?.date}} {{verse.period?.era}}\"\n    [style.background-color]=\"verse.period?.color_bg\" \n    [style.color]=\"verse.period?.color_text\" \n    [style.display]=\"aperiods.indexOf(verse.period) > -1 && !showLiminal ? 'none' : 'inherit'\"\n    *ngFor=\"let verse of chapter.verses\">\n  <div class=\"number\" *ngIf=\"showVerseNumbers && verse.number && (verse.number - .01) <= numRound(verse.number)\" title=\"{{verse.number}}\">{{numRound(verse.number)}}</div>\n  <span [style.visibility]=\"aperiods.indexOf(verse.period) > -1 && showLiminal ? 'hidden' : 'visible'\">{{verse.text}}</span>\n  <div class=\"linebreak\" *ngIf=\"verse.linebreak\">&nbsp;</div>\n</div>"
+module.exports = "<div *ngFor=\"let verse of chapter.verses\"\n    title=\"{{verse.period?.name}} - {{verse.period?.date}} {{verse.period?.era}}\"\n    [style.background-color]=\"verse.period?.color_bg\" \n    [style.color]=\"verse.period?.color_text\" \n    [style.display]=\"aperiods.indexOf(verse.period) > -1 && !showLiminal ? 'none' : 'inherit'\"\n    class=\"verse verse_{{numRound(verse.number)}}\"\n    [attr.data-number]=\"verse.number\">\n  <div class=\"number\" *ngIf=\"showVerseNumbers && verse.number && (verse.number - .01) <= numRound(verse.number)\" title=\"{{verse.number}}\">{{numRound(verse.number)}}</div>\n  <span [style.visibility]=\"aperiods.indexOf(verse.period) > -1 && showLiminal ? 'hidden' : 'visible'\">{{verse.text}}</span>\n  <div class=\"linebreak\" *ngIf=\"verse.linebreak\">&nbsp;</div>\n</div>"
 
 /***/ }),
 

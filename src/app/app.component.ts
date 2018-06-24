@@ -24,11 +24,10 @@ import Chronology from './models/chronology';
   encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent implements OnInit, OnDestroy {
-  periods: Period[] = data_periods.sort((a, b) => a.date - b.date);
-  periods_items: SelectItem[] = data_periods.map(p => {
-    return { label: p.abbrev, value: p };
-  });
+  periods: Period[] = data_periods.sort((a, b) => a.date - b.date).reverse();
+  periods_items: SelectItem[] = [{ label: '', value: data_periods[0] }];
   periods_selected: Period[] = [];
+  period_colors: string[] = ['D09429', '7338A7', 'B71A4F', '507BC3', '859F4A', '827570', 'E28539'];
 
   books: Book[] = data_books_OT;
   book = 'Genesis';
@@ -46,10 +45,26 @@ export class AppComponent implements OnInit, OnDestroy {
   chronology_supplementary: Chronology[] = data_supplementary;
   chronology_documentary: Chronology[] = data_documentary;
 
+  versedisplays: SelectItem[] = [
+    { label: 'Liminal', value: true },
+    { label: 'Continuous', value: false }
+  ];
+
+  verselines: SelectItem[] = [
+    { label: 'Line / Verses', value: true },
+    { label: 'Natural', value: false }
+  ];
+
+  versenumbers: SelectItem[] = [
+    { label: 'Show Verse #', value: true },
+    { label: 'Hide Verse #', value: false }
+  ];
+
   showVerseNumbers = true;
   showLineByLine = false;
   showLiminal = true;
   showSideMenu = false;
+  showBiblePicker = false;
 
   scroll_bound: null;
   scroll_processing = false;
@@ -71,8 +86,12 @@ export class AppComponent implements OnInit, OnDestroy {
     window.removeEventListener('scroll', this.scroll_bound, true);
   }
 
-  click_book(): void {
+  click_menu(): void {
     this.showSideMenu = true;
+  }
+
+  click_book(): void {
+    this.showBiblePicker = true;
   }
 
   async click_chapter(book: string, chapter: number): Promise<void> {
@@ -112,14 +131,15 @@ export class AppComponent implements OnInit, OnDestroy {
     this.periods_items = this.periods.filter(p => {
       // tslint:disable-next-line:max-line-length
       return  this.left_chapters.filter(c => c.verses &&
-                c.verses.filter(v => v.period && v.period.date === p.date && v.period.era === v.period.era).length
+                c.verses.filter(v => v.period && v.period.date === p.date && v.period.name === p.name).length
               ).length > 0
                 ||
               this.right_chapters.filter(c => c.verses &&
-                c.verses.filter(v => v.period && v.period.date === p.date && v.period.era === v.period.era).length
+                c.verses.filter(v => v.period && v.period.date === p.date && v.period.name === p.name).length
               ).length > 0
       ;
-    }).map(p => {
+    }).map((p, i) => {
+      p.color_text = `#${this.period_colors[i]}`;
       return { label: p.abbrev, value: p };
     });
   }
@@ -220,14 +240,13 @@ export class AppComponent implements OnInit, OnDestroy {
       if ((!isend && text_end_idx < text_split.length) && _verse.linebreak) {
         _verse.linebreak = false;
       }
-      // set the chronology / class for ref in the template
+      // set the chronology for ref in the template
       if (c) {
-        const periods = this.periods.filter(p => p.date == c.Date && p.era == c.Era);
+        const periods = this.periods.filter(p => p.date == c.Date && (p.abbrev == c['Source Name'] || p.old_abbrev == c['Source Name']));
         if (periods.length) {
           _verse.period = periods[0];
         }
         _verse.chronology = c;
-        _verse.classification = `${c.Era}-${c.Date}`;
       }
       // add to array!
       verses.push(_verse);
@@ -331,8 +350,8 @@ export class AppComponent implements OnInit, OnDestroy {
     }).reverse();
 
     // set global chapter
-    this.chapter = parseInt(active_dom_chapters.length ? active_dom_chapters[0].dataset.number : 1);
-    this.verse = parseInt(active_dom_verses.length ? active_dom_verses[0].dataset.number : 1);
+    this.chapter = parseInt(active_dom_chapters.length ? active_dom_chapters[0].dataset.number : 1) || this.chapter;
+    this.verse = parseInt(active_dom_verses.length ? active_dom_verses[0].dataset.number : 1) || this.verse;
     // need to load more chapters?
     if (e.target.scrollTop + e.target.clientHeight >= e.target.scrollHeight - 100) {
       // set min height so we dont get scroll jump

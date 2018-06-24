@@ -1,23 +1,17 @@
 <div class="header">
-  <div class="book" (click)="click_book()">
-    <i class="fa fa-bars" aria-hidden="true"></i>{{book}} {{chapter}}
+  <div class="book">
+    <i class="fa fa-bars" aria-hidden="true" (click)="click_menu()"></i><span (click)="click_book()">{{book}} {{chapter}}</span>
   </div>
   <div class="title">Bible "thoughts" with Mark Stone</div>
   <input type="text" pInputText placeholder="Search">
 </div>
-<p-sidebar [(visible)]="showSideMenu" class="sideMenu">
-  <div class="sideMenu-options">
-    <p-selectButton [options]="chronologies" [(ngModel)]="chronology_selected"></p-selectButton>
-  </div>
-  <div class="onOff">
-    Liminal? <p-inputSwitch [(ngModel)]="showLiminal"></p-inputSwitch>
-  </div>
-  <div class="onOff">
-    One line / verse? <p-inputSwitch [(ngModel)]="showLineByLine"></p-inputSwitch>
-  </div>
-  <div class="onOff">
-    Verse #s? <p-inputSwitch [(ngModel)]="showVerseNumbers"></p-inputSwitch>
-  </div>
+<p-sidebar [(visible)]="showSideMenu" class="sideMenu toggles">
+  <p-selectButton [options]="chronologies" [(ngModel)]="chronology_selected"></p-selectButton>
+  <p-selectButton [options]="versedisplays" [(ngModel)]="showLiminal"></p-selectButton>
+  <p-selectButton [options]="verselines" [(ngModel)]="showLineByLine"></p-selectButton>
+  <p-selectButton [options]="versenumbers" [(ngModel)]="showVerseNumbers"></p-selectButton>
+</p-sidebar>
+<p-sidebar [(visible)]="showBiblePicker" class="sideMenu books">
   <p-accordion class="books" [activeIndex]="book_num - 1" expandIcon="" collapseIcon="">
     <div *ngFor="let book of books">
       <p-accordionTab header="{{book.title}}">
@@ -32,7 +26,7 @@
   <ng-template let-item>
     <div class="period" title="{{item.value.name}}" (click)="click_period(item.value)">
       <span class="period_abbrev" [style.color]="item.value.color_text" [style.background-color]="item.value.color_bg">{{item.value.abbrev}}</span>
-      <div class="period_date">{{item.value.date}} {{item.value.era}}</div>
+      <div class="period_date">{{item.value.date}} BCE</div>
     </div>
 </ng-template>
 </p-selectButton>

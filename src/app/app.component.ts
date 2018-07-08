@@ -25,7 +25,7 @@ import Chronology from './models/chronology';
 })
 export class AppComponent implements OnInit, OnDestroy {
   periods: Period[] = data_periods.sort((a, b) => a.date - b.date).reverse();
-  periods_items: SelectItem[] = [{ label: '', value: data_periods[0] }];
+  periods_items: SelectItem[] = [{ label: '', value: null }];
   periods_selected: Period[] = [];
   period_colors: string[] = ['D09429', '7338A7', 'B71A4F', '507BC3', '859F4A', '827570', 'E28539'];
 
@@ -34,6 +34,8 @@ export class AppComponent implements OnInit, OnDestroy {
   book_num = 1;
   chapter = 1;
   verse = 1;
+  left_translation = 'net';
+  right_translation = 'bhs';
   left_chapters: Chapter[] = [];
   right_chapters: Chapter[] = [];
 
@@ -42,8 +44,6 @@ export class AppComponent implements OnInit, OnDestroy {
     { label: 'Supplementary', value: data_supplementary }
   ];
   chronology_selected: Chronology[] = data_documentary;
-  chronology_supplementary: Chronology[] = data_supplementary;
-  chronology_documentary: Chronology[] = data_documentary;
 
   versedisplays: SelectItem[] = [
     { label: 'Liminal', value: true },
@@ -115,33 +115,51 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
+  click_chronology(): void {
+    // clear values
+    this.left_chapters.forEach(c => {
+      c.verses.forEach(v => {
+        v.chronology = null;
+        v.period = null;
+      });
+    });
+    this.right_chapters.forEach(c => {
+      c.verses.forEach(v => {
+        v.chronology = null;
+        v.period = null;
+      });
+    });
+    // re-process verses
+    this.left_chapters.forEach(c => {
+      c.verses.forEach(v => {
+        // reprocess
+        this.processVerse(this.left_translation, c, v);
+      });
+    });
+    this.right_chapters.forEach(c => {
+      c.verses.forEach(v => {
+        // reprocess
+        this.processVerse(this.right_translation, c, v);
+      });
+    });
+    // filter the periods
+    this.processPeriods();
+  }
+
   async getContent(book: string, chapter: number) {
     // get new content!
     await Promise.all([
-      this.getBibleText('net', book, chapter).then(v => {
+      this.getBibleText(this.left_translation, book, chapter).then(v => {
         this.left_chapters.push(v);
         this.left_chapters.sort((a, b) => a.number - b.number);
       }),
-      this.getBibleText('bhs', book, chapter).then(v => {
+      this.getBibleText(this.right_translation, book, chapter).then(v => {
         this.right_chapters.push(v);
         this.right_chapters.sort((a, b) => a.number - b.number);
       })
     ]);
-    // filter periods
-    this.periods_items = this.periods.filter(p => {
-      // tslint:disable-next-line:max-line-length
-      return  this.left_chapters.filter(c => c.verses &&
-                c.verses.filter(v => v.period && v.period.date === p.date && v.period.name === p.name).length
-              ).length > 0
-                ||
-              this.right_chapters.filter(c => c.verses &&
-                c.verses.filter(v => v.period && v.period.date === p.date && v.period.name === p.name).length
-              ).length > 0
-      ;
-    }).map((p, i) => {
-      p.color_text = `#${this.period_colors[i]}`;
-      return { label: p.abbrev, value: p };
-    });
+    // filter the periods
+    this.processPeriods();
   }
 
   async getBibleText(trans: string, book: string, start_chapter: number, start_verse?: number, end_verse?: number): Promise<Chapter> {
@@ -202,6 +220,28 @@ export class AppComponent implements OnInit, OnDestroy {
     return activeChapter;
   }
 
+  processPeriods() {
+    // filter periods
+    this.periods_items = this.periods.filter(p => {
+      // tslint:disable-next-line:max-line-length
+      return  this.left_chapters.filter(c => c.verses &&
+                c.verses.filter(v => v.period && v.period.date === p.date && v.period.name === p.name).length
+              ).length > 0
+                ||
+              this.right_chapters.filter(c => c.verses &&
+                c.verses.filter(v => v.period && v.period.date === p.date && v.period.name === p.name).length
+              ).length > 0
+      ;
+    }).map((p, i) => {
+      p.color_text = `#${this.period_colors[i]}`;
+      return { label: p.abbrev, value: p };
+    });
+    // need to insert an empty if there are nont
+    if (this.periods_items.length === 0) {
+      this.periods_items = [{ label: '', value: null }];
+    }
+  }
+
   processVerse(trans: string, chapter: Chapter, verse: Verse): Verse[] {
     // tslint:disable:triple-equals
     const verses: Verse[] = [];
@@ -211,11 +251,10 @@ export class AppComponent implements OnInit, OnDestroy {
     // filter data
     const data = this.chronology_selected.filter((c) => {
       return c.Book.toLowerCase() === this.book.toLowerCase() &&
-        c['Start Chapter'] <= chapter.number &&
-        c['End Chapter'] >= chapter.number &&
-        c['Start Verse'] <= verse.number &&
-        c['End Verse'] >= verse.number;
-    }).sort((a, b) => a['Start Verse'] - b['Start Verse']);
+        (c['Start Chapter'] <= chapter.number && c['End Chapter'] >= chapter.number) &&
+        (c['Start Chapter'] != chapter.number || c['Start Verse'] <= verse.number) &&
+        (c['End Chapter'] != chapter.number || c['End Verse'] >= verse.number);
+    }).sort((a, b) => ((a['Start Chapter'] * 1000) + a['Start Verse']) - ((b['Start Chapter'] * 1000) + b['Start Verse']));
     // define verse seg add
     const text_split = verse.text.replace(/^\s+|\s+$/g, '').split(' ');
     const verseSeg = (c: Chronology | null, text_start_idx: number, text_end_idx?: number, isend?: boolean) => {
@@ -268,7 +307,8 @@ export class AppComponent implements OnInit, OnDestroy {
         c[`${lang} intraverse end word index #`] ||
         c[`${lang} intraverse end word order index #`] ||
         c[`${lang} intraverse end word index number`] ||
-        c[`${lang} intraverse end word order index number`]
+        c[`${lang} intraverse end word order index number`] ||
+        99999
       );
       // tslint:disable:one-line
       if (start_chapter == chapter.number && start_verse == verse.number) {
@@ -277,7 +317,7 @@ export class AppComponent implements OnInit, OnDestroy {
           verseSeg(null, 0, start_word);
         }
         // it not ending in this verse then just use the whole rest of the verse
-        if (end_verse != verse.number) {
+        if (end_chapter != chapter.number || end_verse != verse.number) {
           verseSeg(c, start_word, null, true);
         }
         // we need to split up the verse
@@ -292,11 +332,12 @@ export class AppComponent implements OnInit, OnDestroy {
         }
         else {
           // not sure what to do with no real end specified, so just do nothing
+          verseSeg(c, 0, null, true);
         }
       }
       else {
         // the whole verse fits inside the match!
-        verses.push(verse);
+        verseSeg(c, 0, null, true);
       }
     });
     // if there are no matches just return the passed in verse

@@ -6,7 +6,7 @@
   <input type="text" pInputText placeholder="Search">
 </div>
 <p-sidebar [(visible)]="showSideMenu" class="sideMenu toggles">
-  <p-selectButton [options]="chronologies" [(ngModel)]="chronology_selected"></p-selectButton>
+  <p-selectButton [options]="chronologies" [(ngModel)]="chronology_selected" (onChange)="click_chronology()"></p-selectButton>
   <p-selectButton [options]="versedisplays" [(ngModel)]="showLiminal"></p-selectButton>
   <p-selectButton [options]="verselines" [(ngModel)]="showLineByLine"></p-selectButton>
   <p-selectButton [options]="versenumbers" [(ngModel)]="showVerseNumbers"></p-selectButton>
@@ -24,9 +24,13 @@
 </p-sidebar>
 <p-selectButton class="periods" [options]="periods_items" [(ngModel)]="periods_selected" multiple="true">
   <ng-template let-item>
-    <div class="period" title="{{item.value.name}}" (click)="click_period(item.value)">
+    <div *ngIf="item.value != null" class="period" title="{{item.value.name}}" (click)="click_period(item.value)">
       <span class="period_abbrev" [style.color]="item.value.color_text" [style.background-color]="item.value.color_bg">{{item.value.abbrev}}</span>
       <div class="period_date">{{item.value.date}} BCE</div>
+    </div>
+    <div *ngIf="item.value == null" class="period">
+        <span class="period_abbrev">No sources found!</span>
+        <div class="period_date">&nbsp;</div>
     </div>
 </ng-template>
 </p-selectButton>

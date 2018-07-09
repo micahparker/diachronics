@@ -25,7 +25,7 @@ import Chronology from './models/chronology';
 })
 export class AppComponent implements OnInit, OnDestroy {
   periods: Period[] = data_periods.sort((a, b) => a.date - b.date).reverse();
-  periods_items: SelectItem[] = [{ label: '', value: null }];
+  periods_items: SelectItem[] = [{ label: '', value: false }];
   periods_selected: Period[] = [];
   period_colors: string[] = ['D09429', '7338A7', 'B71A4F', '507BC3', '859F4A', '827570', 'E28539'];
 
@@ -43,7 +43,7 @@ export class AppComponent implements OnInit, OnDestroy {
     { label: 'Documentary', value: data_documentary },
     { label: 'Supplementary', value: data_supplementary }
   ];
-  chronology_selected: Chronology[] = data_documentary;
+  chronology_selected: Chronology[] = data_supplementary;
 
   versedisplays: SelectItem[] = [
     { label: 'Liminal', value: true },
@@ -103,7 +103,7 @@ export class AppComponent implements OnInit, OnDestroy {
     // now get the content
     this.getContent(book, chapter);
     // hide the side menu
-    this.showSideMenu = false;
+    this.showBiblePicker = false;
   }
 
   click_period(period: Period): void {
@@ -116,34 +116,13 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   click_chronology(): void {
-    // clear values
-    this.left_chapters.forEach(c => {
-      c.verses.forEach(v => {
-        v.chronology = null;
-        v.period = null;
-      });
-    });
-    this.right_chapters.forEach(c => {
-      c.verses.forEach(v => {
-        v.chronology = null;
-        v.period = null;
-      });
-    });
-    // re-process verses
-    this.left_chapters.forEach(c => {
-      c.verses.forEach(v => {
-        // reprocess
-        this.processVerse(this.left_translation, c, v);
-      });
-    });
-    this.right_chapters.forEach(c => {
-      c.verses.forEach(v => {
-        // reprocess
-        this.processVerse(this.right_translation, c, v);
-      });
-    });
-    // filter the periods
-    this.processPeriods();
+    // clear chapters
+    this.left_chapters.length = 0;
+    this.right_chapters.length = 0;
+    // now get the content
+    this.getContent(this.book, this.chapter);
+    // hide the side menu
+    this.showSideMenu = false;
   }
 
   async getContent(book: string, chapter: number) {
@@ -187,7 +166,7 @@ export class AppComponent implements OnInit, OnDestroy {
           this.processVerse(trans, activeChapter, {
             number: v.verse,
             text: v.text.replace(/\<\/?p ?[a-z\=\"]{0,}\>/gi, '').replace(/\<a .*\<\/a\>/gi, ''),
-            linebreak: this.showLineByLine || (v.text.indexOf('</p>') > -1)
+            linebreak: (v.text.indexOf('</p>') > -1)
           })
         );
       });
@@ -211,7 +190,7 @@ export class AppComponent implements OnInit, OnDestroy {
           this.processVerse(trans, activeChapter, {
             number: json.chapter[v].verse_nr,
             text: json.chapter[v].verse,
-            linebreak: this.showLineByLine || (json.chapter[v].verse.match(/\\r|\\n/) > -1)
+            linebreak: (json.chapter[v].verse.match(/\\r|\\n/) > -1)
           })
         );
       }
@@ -238,7 +217,7 @@ export class AppComponent implements OnInit, OnDestroy {
     });
     // need to insert an empty if there are nont
     if (this.periods_items.length === 0) {
-      this.periods_items = [{ label: '', value: null }];
+      this.periods_items = [{ label: '', value: false }];
     }
   }
 
@@ -381,6 +360,10 @@ export class AppComponent implements OnInit, OnDestroy {
       return (e.target.scrollTop) >= (c.offsetTop - e.target.offsetTop) &&
         (e.target.scrollTop) < ((c.offsetTop - e.target.offsetTop) + c.offsetHeight);
     }).reverse();
+    if (!active_dom_chapters.length) {
+      this.scroll_processing = false;
+      return;
+    }
     // detect visible verses
     const active_dom_verses: any[] = Array.from(active_dom_chapters[0].querySelectorAll('.verse')).filter((c: any, i: number) => {
       if (e.target.scrollTop < ((active_dom_chapters[0].offsetTop - e.target.offsetTop) + scrollTopThreshold) && i === 0) {
@@ -389,7 +372,10 @@ export class AppComponent implements OnInit, OnDestroy {
       return (e.target.scrollTop) >= (c.offsetTop - e.target.offsetTop) &&
         (e.target.scrollTop) < ((c.offsetTop - e.target.offsetTop) + c.offsetHeight);
     }).reverse();
-
+    if (!active_dom_chapters.length) {
+      this.scroll_processing = false;
+      return;
+    }
     // set global chapter
     this.chapter = parseInt(active_dom_chapters.length ? active_dom_chapters[0].dataset.number : 1) || this.chapter;
     this.verse = parseInt(active_dom_verses.length ? active_dom_verses[0].dataset.number : 1) || this.verse;
@@ -406,9 +392,15 @@ export class AppComponent implements OnInit, OnDestroy {
       const verseClass = this.verse > 1 ? active_dom_verses[0].className.split(' ').join('.') : 'chapter_number';
       // scroll other pane
       if (e.target.className.indexOf('book_left') > -1) {
-        document.querySelector(`.book_right .${chapterClass} .${verseClass}`).scrollIntoView();
+        const domNode = document.querySelector(`.book_right .${chapterClass} .${verseClass}`);
+        if (domNode) {
+          domNode.scrollIntoView();
+        }
       } else if (e.target.className.indexOf('book_right') > -1) {
-        document.querySelector(`.book_left .${chapterClass} .${verseClass}`).scrollIntoView();
+        const domNode = document.querySelector(`.book_left .${chapterClass} .${verseClass}`);
+        if (domNode) {
+          domNode.scrollIntoView();
+        }
       }
     }
     // ok, let scrolling trigger again... with timeout otherwise it causes a ping pong effect

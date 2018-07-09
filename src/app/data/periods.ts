@@ -642,9 +642,9 @@ export default [
     },
     {
         'date': 450,
-        'old_abbrev': 'HS',
+        'old_abbrev': 'HS (Holiness School)',
         'new_abbrev': false,
-        'abbrev': '',
+        'abbrev': 'HS',
         'name': 'Holiness School'
     },
     {

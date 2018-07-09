@@ -2,10 +2,10 @@
     title="{{verse.period?.name}} - {{verse.period?.date}} BCE"
     [style.background-color]="verse.period?.color_bg" 
     [style.color]="verse.period?.color_text" 
-    [style.display]="aperiods.indexOf(verse.period) > -1 && !showLiminal ? 'none' : 'inherit'"
+    [style.display]="aperiods.indexOf(verse.period) > -1 && !showLiminal ? 'none' : 'inline'"
     class="verse verse_{{numRound(verse.number)}}"
     [attr.data-number]="verse.number">
   <div class="number" *ngIf="showVerseNumbers && verse.number && (verse.number - .01) <= numRound(verse.number)" title="{{verse.number}}">{{numRound(verse.number)}}</div>
   <span [style.visibility]="aperiods.indexOf(verse.period) > -1 && showLiminal ? 'hidden' : 'visible'">{{verse.text}}</span>
-  <div class="linebreak" *ngIf="verse.linebreak">&nbsp;</div>
+  <div class="linebreak" *ngIf="verse.linebreak || showLineByLine">&nbsp;</div>
 </div>

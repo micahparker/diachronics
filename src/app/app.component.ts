@@ -7,15 +7,15 @@ import * as _ from 'lodash';
 import { SelectItem } from 'primeng/api';
 
 import data_books_OT from './data/books_OT';
-import data_periods, { Period } from './data/periods';
-import data_documentary from './data/documentary';
-import data_supplementary from './data/supplementary';
-
+//import data_periods, { Period } from './data/periods';
+//import data_documentary from './data/documentary';
+//import data_supplementary from './data/supplementary';
 
 import Book from './models/book';
 import Chapter from './models/chapter';
 import Verse from './models/verse';
 import Chronology from './models/chronology';
+import Period from './models/period';
 
 @Component({
   selector: 'app-root',
@@ -24,7 +24,7 @@ import Chronology from './models/chronology';
   encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent implements OnInit, OnDestroy {
-  periods: Period[] = data_periods.sort((a, b) => a.date - b.date).reverse();
+  periods: Period[] = [];
   periods_items: SelectItem[] = [{ label: '', value: false }];
   periods_selected: Period[] = [];
   period_colors: string[] = ['D09429', '7338A7', 'B71A4F', '507BC3', '859F4A', '827570', 'E28539'];
@@ -39,11 +39,8 @@ export class AppComponent implements OnInit, OnDestroy {
   left_chapters: Chapter[] = [];
   right_chapters: Chapter[] = [];
 
-  chronologies: SelectItem[] = [
-    { label: 'Documentary', value: data_documentary },
-    { label: 'Supplementary', value: data_supplementary }
-  ];
-  chronology_selected: Chronology[] = data_supplementary;
+  chronologies: SelectItem[] = [];
+  chronology_selected: Chronology[] = [];
 
   versedisplays: SelectItem[] = [
     { label: 'Liminal', value: true },
@@ -70,10 +67,29 @@ export class AppComponent implements OnInit, OnDestroy {
   scroll_processing = false;
   scroll_chapter: any;
   scroll_verse: any;
+  scroll_timeout = null;
 
-  ngOnInit() {
+  async ngOnInit() {
+    var cachebuster = Math.round(new Date().getTime() / 1000);
     this.scroll_bound = this.scroll.bind(this);
     window.addEventListener('scroll', this.scroll_bound, true);
+    // get data
+    this.periods = (await axios({
+      url: `https://www.micahparker.com/diachronics/data/sources.json?cbnow=${cachebuster}`
+    })).data.value.map(d => new Period(d));
+    this.chronologies.push({
+      'label': 'Documentary',
+      'value': (await axios({
+            url: `https://www.micahparker.com/diachronics/data/documentary.json?cbnow=${cachebuster}`
+          })).data.value.filter(d => d.Book).map(d => new Chronology(d))
+    });
+    this.chronologies.push({
+      'label': 'Supplementary',
+      'value': (await axios({
+            url: `https://www.micahparker.com/diachronics/data/supplementary.json?cbnow=${cachebuster}`
+          })).data.value.filter(d => d.Book).map(d => new Chronology(d))
+    });
+    this.chronology_selected = this.chronologies[1].value;
     // init content
     this.getContent(this.book, this.chapter).then(() =>
       this.getContent(this.book, this.chapter + 1)
@@ -346,6 +362,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   async scroll(e): Promise<void> {
     // tslint:disable:radix
+    clearTimeout(this.scroll_timeout);
+    this.scroll_timeout = setTimeout(() => { scroll(e) }, 1000);
     if (this.scroll_processing) {
       return;
     }

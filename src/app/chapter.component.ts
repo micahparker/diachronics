@@ -7,11 +7,9 @@ import * as _ from 'lodash';
 import { SelectItem } from 'primeng/api';
 
 import data_books_OT from './data/books_OT';
-import data_documentary from './data/documentary';
-import data_supplementary from './data/supplementary';
 
 import Chapter from './models/chapter';
-import { Period } from './data/periods';
+import Period from './models/period';
 
 @Component({
   selector: 'app-chapter',

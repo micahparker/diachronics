@@ -1,5 +1,5 @@
 import Chronology from './chronology';
-import { Period } from '../data/periods';
+import Period from '../models/period';
 
 export default interface Verse {
     number: number;

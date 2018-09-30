@@ -70,7 +70,7 @@ export class AppComponent implements OnInit, OnDestroy {
   scroll_timeout = null;
 
   async ngOnInit() {
-    var cachebuster = Math.round(new Date().getTime() / 1000);
+    var cachebuster = 0; //Math.round(new Date().getTime() / 1000);
     this.scroll_bound = this.scroll.bind(this);
     window.addEventListener('scroll', this.scroll_bound, true);
     // get data
@@ -281,6 +281,10 @@ export class AppComponent implements OnInit, OnDestroy {
           _verse.period = periods[0];
         }
         _verse.chronology = c;
+        // override verse text?
+        if (c['Alt translation']) {
+          // _verse.text = c['Alt translation'];
+        }
       }
       // add to array!
       verses.push(_verse);
@@ -293,18 +297,9 @@ export class AppComponent implements OnInit, OnDestroy {
       const end_chapter = c['End Chapter'] + 0;
       const start_verse = c['Start Verse'] + 0;
       const end_verse = c['End Verse'] + 0;
-      const start_word = (
-        c[`${lang} intraverse start word index #`] ||
-        c[`${lang} intraverse start word order index #`] ||
-        c[`${lang} intraverse start word index number`] ||
-        c[`${lang} intraverse start word order index number`]) - 1;
-      const end_word = (
-        c[`${lang} intraverse end word index #`] ||
-        c[`${lang} intraverse end word order index #`] ||
-        c[`${lang} intraverse end word index number`] ||
-        c[`${lang} intraverse end word order index number`] ||
-        99999
-      );
+      const start_word = c[`${lang.toLowerCase()}_intra_start`] - 1;
+      const end_word = c[`${lang.toLowerCase()}_intra_end`] || 99999;
+
       // tslint:disable:one-line
       if (start_chapter == chapter.number && start_verse == verse.number) {
         // save off the first part of the verse
@@ -362,8 +357,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   async scroll(e): Promise<void> {
     // tslint:disable:radix
-    clearTimeout(this.scroll_timeout);
-    this.scroll_timeout = setTimeout(() => { scroll(e) }, 1000);
+    //clearTimeout(this.scroll_timeout);
+    //this.scroll_timeout = setTimeout(() => { scroll(e) }, 1000);
     if (this.scroll_processing) {
       return;
     }

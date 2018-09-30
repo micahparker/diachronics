@@ -13,6 +13,7 @@ import { SidebarModule } from 'primeng/sidebar';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { InputSwitchModule } from 'primeng/inputswitch';
     SidebarModule,
     ScrollPanelModule,
     SelectButtonModule,
-    InputSwitchModule
+    InputSwitchModule,
+    TooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]

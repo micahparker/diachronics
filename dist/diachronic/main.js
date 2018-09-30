@@ -157,7 +157,7 @@ var AppComponent = /** @class */ (function () {
             return __generator(this, function (_k) {
                 switch (_k.label) {
                     case 0:
-                        cachebuster = Math.round(new Date().getTime() / 1000);
+                        cachebuster = 0;
                         this.scroll_bound = this.scroll.bind(this);
                         window.addEventListener('scroll', this.scroll_bound, true);
                         // get data
@@ -400,6 +400,10 @@ var AppComponent = /** @class */ (function () {
                     _verse.period = periods[0];
                 }
                 _verse.chronology = c;
+                // override verse text?
+                if (c['Alt translation']) {
+                    // _verse.text = c['Alt translation'];
+                }
             }
             // add to array!
             verses.push(_verse);
@@ -412,15 +416,8 @@ var AppComponent = /** @class */ (function () {
             var end_chapter = c['End Chapter'] + 0;
             var start_verse = c['Start Verse'] + 0;
             var end_verse = c['End Verse'] + 0;
-            var start_word = (c[lang + " intraverse start word index #"] ||
-                c[lang + " intraverse start word order index #"] ||
-                c[lang + " intraverse start word index number"] ||
-                c[lang + " intraverse start word order index number"]) - 1;
-            var end_word = (c[lang + " intraverse end word index #"] ||
-                c[lang + " intraverse end word order index #"] ||
-                c[lang + " intraverse end word index number"] ||
-                c[lang + " intraverse end word order index number"] ||
-                99999);
+            var start_word = c[lang.toLowerCase() + "_intra_start"] - 1;
+            var end_word = c[lang.toLowerCase() + "_intra_end"] || 99999;
             // tslint:disable:one-line
             if (start_chapter == chapter.number && start_verse == verse.number) {
                 // save off the first part of the verse
@@ -480,8 +477,8 @@ var AppComponent = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         // tslint:disable:radix
-                        clearTimeout(this.scroll_timeout);
-                        this.scroll_timeout = setTimeout(function () { scroll(e); }, 1000);
+                        //clearTimeout(this.scroll_timeout);
+                        //this.scroll_timeout = setTimeout(() => { scroll(e) }, 1000);
                         if (this.scroll_processing) {
                             return [2 /*return*/];
                         }
@@ -590,12 +587,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var primeng_selectbutton__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(primeng_selectbutton__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var primeng_inputswitch__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! primeng/inputswitch */ "./node_modules/primeng/inputswitch.js");
 /* harmony import */ var primeng_inputswitch__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(primeng_inputswitch__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var primeng_tooltip__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! primeng/tooltip */ "./node_modules/primeng/tooltip.js");
+/* harmony import */ var primeng_tooltip__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(primeng_tooltip__WEBPACK_IMPORTED_MODULE_12__);
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -626,7 +626,8 @@ var AppModule = /** @class */ (function () {
                 primeng_sidebar__WEBPACK_IMPORTED_MODULE_8__["SidebarModule"],
                 primeng_scrollpanel__WEBPACK_IMPORTED_MODULE_9__["ScrollPanelModule"],
                 primeng_selectbutton__WEBPACK_IMPORTED_MODULE_10__["SelectButtonModule"],
-                primeng_inputswitch__WEBPACK_IMPORTED_MODULE_11__["InputSwitchModule"]
+                primeng_inputswitch__WEBPACK_IMPORTED_MODULE_11__["InputSwitchModule"],
+                primeng_tooltip__WEBPACK_IMPORTED_MODULE_12__["TooltipModule"]
             ],
             providers: [],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]]
@@ -657,7 +658,7 @@ module.exports = ".book .chapter {\r\n    \r\n}\r\n\r\n.book .chapter .ltr {\r\n
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngFor=\"let verse of chapter.verses\"\r\n    title=\"{{verse.period?.name}} - {{verse.period?.date}} BCE\"\r\n    [style.background-color]=\"verse.period?.color_bg\" \r\n    [style.color]=\"verse.period?.color_text\" \r\n    [style.display]=\"aperiods.indexOf(verse.period) > -1 && !showLiminal ? 'none' : 'inline'\"\r\n    class=\"verse verse_{{numRound(verse.number)}}\"\r\n    [attr.data-number]=\"verse.number\">\r\n  <div class=\"number\" *ngIf=\"showVerseNumbers && verse.number && (verse.number - .01) <= numRound(verse.number)\" title=\"{{verse.number}}\">{{numRound(verse.number)}}</div>\r\n  <span [style.visibility]=\"aperiods.indexOf(verse.period) > -1 && showLiminal ? 'hidden' : 'visible'\">{{verse.text}}</span>\r\n  <div class=\"linebreak\" *ngIf=\"verse.linebreak || showLineByLine\">&nbsp;</div>\r\n</div>"
+module.exports = "<div *ngFor=\"let verse of chapter.verses\"\r\n    [style.background-color]=\"verse.period?.color_bg\" \r\n    [style.color]=\"verse.period?.color_text\" \r\n    [style.display]=\"aperiods.indexOf(verse.period) > -1 && !showLiminal ? 'none' : 'inline'\"\r\n    class=\"verse verse_{{numRound(verse.number)}}\"\r\n    [attr.data-number]=\"verse.number\">\r\n  <div class=\"number\" *ngIf=\"showVerseNumbers && verse.number && (verse.number - .01) <= numRound(verse.number)\" title=\"{{verse.number}}\">{{numRound(verse.number)}}</div>\r\n  <span [style.visibility]=\"aperiods.indexOf(verse.period) > -1 && showLiminal ? 'hidden' : 'visible'\" pTooltip=\"{{verse.chronology['Footnote text']}}\">{{verse.text}}</span>\r\n  <div class=\"linebreak\" *ngIf=\"verse.linebreak || showLineByLine\">&nbsp;</div>\r\n</div>"
 
 /***/ }),
 
@@ -983,33 +984,53 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
+// tslint:disable:radix
 
 var Chronology = /** @class */ (function () {
     function Chronology(data) {
         if (data) {
-            this['Christian Book Order'] = data['Christian Book Order'];
-            this['Book'] = data['Book'];
+            lodash__WEBPACK_IMPORTED_MODULE_0__["extend"](this, data);
             this['Start Chapter'] = lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['Start Chapter']);
             this['Start Verse'] = lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['Start Verse']);
             this['Diff Eng start ch'] = lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['Diff Eng start ch']);
             this['Diff Eng start vs'] = lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['Diff Eng start vs']);
-            this['ENGLISH intraverse start word index #'] = lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['ENGLISH intraverse start word index #']);
-            this['HEBREW Intraverse Start word index #'] = lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['HEBREW Intraverse Start word index #']);
-            this['ENGLISH intraverse start word order index #'] = lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['ENGLISH intraverse start word order index #']);
-            this['HEBREW intraverse start word order index #'] = lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['HEBREW intraverse start word order index #']);
+            this['english_intra_start'] = (lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['ENGLISH intraverse start word index #']) ||
+                lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['ENGLISH intraverse start word order index #']) ||
+                lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['ENGLISH intraverse start word index number']) ||
+                lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['ENGLISH intraverse start word order index number']) ||
+                lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['ENGLISH intraverse start word index _x0023_']) ||
+                lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['ENGLISH intraverse start word order index _x0023_']) ||
+                lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['ENGLISH Intraverse Start word index _x0023_']) ||
+                lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['ENGLISH Intraverse Start word index number']));
+            this['hebrew_intra_start'] = (lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['HEBREW intraverse start word index #']) ||
+                lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['HEBREW intraverse start word order index #']) ||
+                lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['HEBREW intraverse start word index number']) ||
+                lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['HEBREW intraverse start word order index number']) ||
+                lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['HEBREW intraverse start word index _x0023_']) ||
+                lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['HEBREW intraverse start word order index _x0023_']) ||
+                lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['HEBREW Intraverse Start word index _x0023_']) ||
+                lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['HEBREW Intraverse Start word index number']));
             this['End Chapter'] = lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['End Chapter']);
             this['End Verse'] = lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['End Verse']);
             this['Diff Eng end ch'] = lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['Diff Eng end ch']);
             this['Diff Eng end vs'] = lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['Diff Eng end vs']);
-            this['ENGLISH intraverse end word index #'] = lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['ENGLISH intraverse end word index #']);
-            this['HEBREW Intraverse End word index number'] = lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['HEBREW Intraverse End word index number']);
-            this['ENGLISH intraverse end word order index #'] = lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['ENGLISH intraverse end word order index #']);
-            this['HEBREW Intraverse End word order index number'] = lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['HEBREW Intraverse End word order index number']);
+            this['english_intra_end'] = (lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['ENGLISH intraverse end word index #']) ||
+                lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['ENGLISH intraverse end word order index #']) ||
+                lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['ENGLISH intraverse end word index number']) ||
+                lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['ENGLISH intraverse end word order index number']) ||
+                lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['ENGLISH intraverse end word index _x0023_']) ||
+                lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['ENGLISH intraverse end word order index _x0023_']) ||
+                lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['ENGLISH Intraverse End word index _x0023_']) ||
+                lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['English Intraverse End word index number']));
+            this['hebrew_intra_end'] = (lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['HEBREW intraverse end word index number']) ||
+                lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['HEBREW intraverse end word order index #']) ||
+                lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['HEBREW intraverse end word index number']) ||
+                lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['HEBREW intraverse end word order index number']) ||
+                lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['HEBREW intraverse end word index _x0023_']) ||
+                lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['HEBREW intraverse end word order index _x0023_']) ||
+                lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['HEBREW Intraverse End word index _x0023_']) ||
+                lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['HEBREW Intraverse End word index number']));
             this['Date'] = lodash__WEBPACK_IMPORTED_MODULE_0__["parseInt"](data['Date']);
-            this['Era'] = data['Era'];
-            this['Source Name'] = data['Source Name'];
-            this['Alt translation'] = data['Alt translation'];
-            this['Footnote text'] = data['Footnote text'];
         }
     }
     return Chronology;

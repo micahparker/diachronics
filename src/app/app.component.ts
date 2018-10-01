@@ -29,11 +29,14 @@ export class AppComponent implements OnInit, OnDestroy {
   periods_selected: Period[] = [];
   period_colors: string[] = ['D09429', '7338A7', 'B71A4F', '507BC3', '859F4A', '827570', 'E28539'];
 
+  search = '';
   books: Book[] = data_books_OT;
   book = 'Genesis';
   book_num = 1;
   chapter = 1;
   verse = 1;
+  max_chapter = 1;
+  max_verse = 1;
   left_translation = 'net';
   right_translation = 'bhs';
   left_chapters: Chapter[] = [];
@@ -69,8 +72,10 @@ export class AppComponent implements OnInit, OnDestroy {
   scroll_verse: any;
   scroll_timeout = null;
 
+  loading_content = true;
+
   async ngOnInit() {
-    var cachebuster = 0; //Math.round(new Date().getTime() / 1000);
+    const cachebuster = Math.round(new Date().getTime() / 1000);
     this.scroll_bound = this.scroll.bind(this);
     window.addEventListener('scroll', this.scroll_bound, true);
     // get data
@@ -137,11 +142,18 @@ export class AppComponent implements OnInit, OnDestroy {
     this.right_chapters.length = 0;
     // now get the content
     this.getContent(this.book, this.chapter);
+    this.max_chapter = this.chapter;
     // hide the side menu
     this.showSideMenu = false;
   }
 
+  async click_more() {
+    // get the new content
+    await this.getContent(this.book, this.max_chapter + 1);
+  }
+
   async getContent(book: string, chapter: number) {
+    this.loading_content = true;
     // get new content!
     await Promise.all([
       this.getBibleText(this.left_translation, book, chapter).then(v => {
@@ -155,6 +167,12 @@ export class AppComponent implements OnInit, OnDestroy {
     ]);
     // filter the periods
     this.processPeriods();
+    // set max
+    if (chapter > this.max_chapter) {
+      this.max_chapter = chapter;
+    }
+    // release
+    this.loading_content = false;
   }
 
   async getBibleText(trans: string, book: string, start_chapter: number, start_verse?: number, end_verse?: number): Promise<Chapter> {
@@ -281,9 +299,13 @@ export class AppComponent implements OnInit, OnDestroy {
           _verse.period = periods[0];
         }
         _verse.chronology = c;
-        // override verse text?
-        if (c['Alt translation']) {
-          // _verse.text = c['Alt translation'];
+        // set alt text
+        if (c['Alt translation'] && lang === 'ENGLISH') {
+          _verse.alt_text = c['Alt translation'];
+        }
+        // footnote?
+        if (c['Footnote text']) {
+          _verse.footnote = c['Footnote text'];
         }
       }
       // add to array!
@@ -357,8 +379,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   async scroll(e): Promise<void> {
     // tslint:disable:radix
-    //clearTimeout(this.scroll_timeout);
-    //this.scroll_timeout = setTimeout(() => { scroll(e) }, 1000);
     if (this.scroll_processing) {
       return;
     }
@@ -392,13 +412,6 @@ export class AppComponent implements OnInit, OnDestroy {
     // set global chapter
     this.chapter = parseInt(active_dom_chapters.length ? active_dom_chapters[0].dataset.number : 1) || this.chapter;
     this.verse = parseInt(active_dom_verses.length ? active_dom_verses[0].dataset.number : 1) || this.verse;
-    // need to load more chapters?
-    if (e.target.scrollTop + e.target.clientHeight >= e.target.scrollHeight - 100) {
-      // set min height so we dont get scroll jump
-      e.target.style.minHeight = e.target.clientHeight;
-      // get the new content
-      await this.getContent(this.book, this.chapter + 1);
-    }
     // move other pane?
     if (active_dom_chapters.length && active_dom_verses.length) {
       const chapterClass = active_dom_chapters[0].className.split(' ').join('.');

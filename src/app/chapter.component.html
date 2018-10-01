@@ -5,6 +5,9 @@
     class="verse verse_{{numRound(verse.number)}}"
     [attr.data-number]="verse.number">
   <div class="number" *ngIf="showVerseNumbers && verse.number && (verse.number - .01) <= numRound(verse.number)" title="{{verse.number}}">{{numRound(verse.number)}}</div>
-  <span [style.visibility]="aperiods.indexOf(verse.period) > -1 && showLiminal ? 'hidden' : 'visible'" pTooltip="{{verse.chronology['Footnote text']}}">{{verse.text}}</span>
+  <span [style.visibility]="aperiods.indexOf(verse.period) > -1 && showLiminal ? 'hidden' : 'visible'" pTooltip="{{verse.footnote}}">
+    <span *ngIf="verse.alt_text"><em>{{verse.alt_text}}</em></span>
+    <span *ngIf="!verse.alt_text">{{verse.text}}</span>
+  </span>
   <div class="linebreak" *ngIf="verse.linebreak || showLineByLine">&nbsp;</div>
 </div>

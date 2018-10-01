@@ -3,7 +3,7 @@
     <i class="fa fa-bars" aria-hidden="true" (click)="click_menu()"></i><span (click)="click_book()">{{book}} {{chapter}}</span>
   </div>
   <div class="title">Bible "thoughts" with Mark Stone</div>
-  <input type="text" pInputText placeholder="Search">
+  <input type="text" pInputText placeholder="Search" [(ngModel)]="search">
 </div>
 <p-sidebar [(visible)]="showSideMenu" class="sideMenu toggles">
   <p-selectButton [options]="chronologies" [(ngModel)]="chronology_selected" (onChange)="click_chronology()"></p-selectButton>
@@ -47,6 +47,7 @@
                 <app-chapter [chapter]="chapter" [aperiods]="periods_selected" [showVerseNumbers]="showVerseNumbers" [showLineByLine]="showLineByLine" [showLiminal]="showLiminal"></app-chapter>
               </div>
           </div>
+          <button (click)="click_more()" *ngIf="!loading_content">Load Next Chapter</button>
         </div>
     </div>
     <div class="split-pane-content-secondary">
@@ -61,6 +62,7 @@
                 <app-chapter [chapter]="chapter" [aperiods]="periods_selected" [showVerseNumbers]="showVerseNumbers" [showLineByLine]="showLineByLine" [showLiminal]="showLiminal"></app-chapter>
               </div>
             </div>
+            <button (click)="click_more()" *ngIf="!loading_content">Load Next Chapter</button>
         </div>
     </div>
 </vertical-split-pane>
